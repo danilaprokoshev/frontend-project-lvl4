@@ -1,7 +1,7 @@
 install: install-deps
 
 start:
-	heroku local -f Procfile.dev
+	heroku local -f Procfile
 
 start-backend:
 	npx nodemon bin/slack.js
