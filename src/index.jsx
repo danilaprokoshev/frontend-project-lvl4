@@ -10,80 +10,52 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
+  // Redirect,
   Link,
 } from 'react-router-dom';
+import NotFoundPage from './components/NotFoundPage.jsx';
 
 if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
 }
 
-// const p = document.createElement('p');
-// p.classList.add('card-text');
-// p.textContent = 'It works!';
-//
-// const h5 = document.createElement('h5');
-// h5.classList.add('card-title');
-// h5.textContent = 'Project frontend l4 boilerplate';
-//
-// const cardBody = document.createElement('div');
-// cardBody.classList.add('card-body');
-// cardBody.append(h5, p);
-//
-// const card = document.createElement('div');
-// card.classList.add('card', 'text-center');
-// card.append(cardBody);
+const Home = () => <h2>Chat</h2>;
 
-// container.append(card);
+const Login = () => <h2>Login</h2>;
 
-function App() {
-  return (
-    <Router>
-      <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/about">About</Link>
-            </li>
-            <li>
-              <Link to="/users">Users</Link>
-            </li>
-          </ul>
-        </nav>
+// const NotFound = () => (
+//   <h1 className="h4 text-center text-muted">
+//     Ой, похоже, такой страницы нет!
+//   </h1>
+// );
 
-        {/* A <Switch> looks through its children <Route>s and
-            renders the first one that matches the current URL. */}
-        <Switch>
-          <Route path="/about">
-            <About />
-          </Route>
-          <Route path="/users">
-            <Users />
-          </Route>
-          <Route path="/">
-            <Home />
-          </Route>
-        </Switch>
-      </div>
-    </Router>
-  );
-}
-
-function Home() {
-  return <h2>Home</h2>;
-}
-
-function About() {
-  return <h2>About</h2>;
-}
-
-function Users() {
-  return <h2>Users</h2>;
-}
+const App = () => (
+  <Router>
+    <div>
+      <nav>
+        <ul>
+          <li>
+            <Link to="/">Chat</Link>
+          </li>
+          <li>
+            <Link to="/login">Login</Link>
+          </li>
+        </ul>
+      </nav>
+      <Switch>
+        <Route exact path="/login">
+          <Login />
+        </Route>
+        <Route exact path="/">
+          <Home />
+        </Route>
+        <Route path="*">
+          <NotFoundPage />
+        </Route>
+      </Switch>
+    </div>
+  </Router>
+);
 
 const mountNode = document.querySelector('#chat');
 ReactDOM.render(<App />, mountNode);
-
-console.log('it works!');
