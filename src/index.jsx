@@ -10,24 +10,17 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  // Redirect,
+  Redirect,
   Link,
 } from 'react-router-dom';
 import NotFoundPage from './components/NotFoundPage.jsx';
+import LoginForm from './components/LoginForm.jsx';
 
 if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
 }
 
-const Home = () => <h2>Chat</h2>;
-
-const Login = () => <h2>Login</h2>;
-
-// const NotFound = () => (
-//   <h1 className="h4 text-center text-muted">
-//     Ой, похоже, такой страницы нет!
-//   </h1>
-// );
+const Home = () => <h2>Home</h2>;
 
 const App = () => (
   <Router>
@@ -35,7 +28,7 @@ const App = () => (
       <nav>
         <ul>
           <li>
-            <Link to="/">Chat</Link>
+            <Link to="/">Home</Link>
           </li>
           <li>
             <Link to="/login">Login</Link>
@@ -44,12 +37,13 @@ const App = () => (
       </nav>
       <Switch>
         <Route exact path="/login">
-          <Login />
+          <LoginForm />
         </Route>
         <Route exact path="/">
           <Home />
         </Route>
         <Route path="*">
+          <Redirect to="/404 " />
           <NotFoundPage />
         </Route>
       </Switch>
