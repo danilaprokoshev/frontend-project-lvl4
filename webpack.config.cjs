@@ -14,12 +14,15 @@ module.exports = {
     path: path.join(__dirname, 'dist', 'public'),
     publicPath: '/assets/',
   },
+  devtool: 'source-map',
   devServer: {
     compress: true,
     port: 8080,
     host: '0.0.0.0',
     publicPath: '/assets/',
     historyApiFallback: true,
+    transportMode: 'ws',
+    injectClient: false,
   },
   plugins: [
     new MiniCssExtractPlugin(),
