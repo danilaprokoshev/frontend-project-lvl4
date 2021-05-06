@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/danilaprokoshev/frontend-project-lvl4#readme",
   "dependencies": {
+    "@reduxjs/toolkit": "^1.5.1",
     "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
     "core-js": "^3.10.1",
@@ -46,6 +47,7 @@
     "react": "^17.0.2",
     "react-bootstrap": "^1.5.2",
     "react-dom": "^17.0.2",
+    "react-redux": "^7.2.4",
     "react-router-dom": "^5.2.0",
     "regenerator-runtime": "^0.13.7",
     "yup": "^0.32.9"

@@ -9,11 +9,10 @@ import {
   Link,
 } from 'react-router-dom';
 import { Navbar, Nav } from 'react-bootstrap';
+import PrivatePage from './PrivatePage.jsx';
 import NotFoundPage from './NotFoundPage.jsx';
 import LoginPage from './LoginPage.jsx';
 import authContext from '../contexts/index.jsx';
-
-const Home = () => <h3>There will be chat!</h3>;
 
 const AuthProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -55,15 +54,15 @@ const PrivateRoute = ({ children, exact, path }) => (
 const App = () => {
   useEffect(() => {
     localStorage.removeItem('userId');
-  });
+  }, []);
+
   return (
     <AuthProvider>
       <Router>
         <div className="d-flex flex-column h-100">
           <Navbar variant="dark" bg="dark" expand="lg">
             <Nav className="mr-auto">
-              <Nav.Link as={Link} to="/">Home</Nav.Link>
-              <Nav.Link as={Link} to="/login">Login</Nav.Link>
+              <Nav.Link as={Link} to="/">Chat</Nav.Link>
             </Nav>
           </Navbar>
           <Switch>
@@ -71,7 +70,7 @@ const App = () => {
               <LoginPage />
             </Route>
             <PrivateRoute exact path="/">
-              <Home />
+              <PrivatePage />
             </PrivateRoute>
             <Route path="*">
               <Redirect to="/404 " />
