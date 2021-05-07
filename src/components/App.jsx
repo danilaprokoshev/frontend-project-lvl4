@@ -60,7 +60,7 @@ const App = () => {
     <AuthProvider>
       <Router>
         <div className="d-flex flex-column h-100">
-          <Navbar variant="dark" bg="dark" expand="lg">
+          <Navbar className="mb-3" variant="dark" bg="dark" expand="lg">
             <Nav className="mr-auto">
               <Nav.Link as={Link} to="/">Chat</Nav.Link>
             </Nav>
