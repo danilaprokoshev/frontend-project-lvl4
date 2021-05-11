@@ -30,7 +30,7 @@ const PrivatePage = () => {
 
     fetchContent();
   }, []);
-
+  console.log(content);
   return _.isEmpty(content)
     ? null
     : (

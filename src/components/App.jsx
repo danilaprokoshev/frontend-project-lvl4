@@ -13,6 +13,7 @@ import PrivatePage from './PrivatePage.jsx';
 import NotFoundPage from './NotFoundPage.jsx';
 import LoginPage from './LoginPage.jsx';
 import authContext from '../contexts/index.jsx';
+import useAuth from '../hooks/index.jsx';
 
 const AuthProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -32,29 +33,32 @@ const isAuthenticated = () => {
   return (userId && userId.token);
 };
 
-const PrivateRoute = ({ children, exact, path }) => (
-  <Route
-    exact={exact}
-    path={path}
-    render={({ location }) => ((isAuthenticated())
-      ? (
-        children
-      )
-      : (
-        <Redirect
-          to={{
-            pathname: '/login',
-            state: { from: location },
-          }}
-        />
-      ))}
-  />
-);
+const PrivateRoute = ({ children, exact, path }) => {
+  const auth = useAuth();
+  return (
+    <Route
+      exact={exact}
+      path={path}
+      render={({ location }) => (((auth.loggedIn && isAuthenticated()))
+        ? (
+          children
+        )
+        : (
+          <Redirect
+            to={{
+              pathname: '/login',
+              state: { from: location },
+            }}
+          />
+        ))}
+    />
+  );
+};
 
 const App = () => {
-  useEffect(() => {
-    localStorage.removeItem('userId');
-  }, []);
+  // useEffect(() => {
+  //   localStorage.removeItem('userId');
+  // }, []);
 
   return (
     <AuthProvider>

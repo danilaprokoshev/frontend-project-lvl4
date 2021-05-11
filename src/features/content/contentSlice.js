@@ -9,9 +9,12 @@ export const contentSlice = createSlice({
     addContent: (state, action) => {
       Object.assign(state.value, action.payload);
     },
+    newMessage: (state, action) => {
+      state.content.messages.push(action.payload);
+    }
   },
 });
 
-export const { addContent } = contentSlice.actions;
+export const { addContent, newMessage } = contentSlice.actions;
 
 export default contentSlice.reducer;
