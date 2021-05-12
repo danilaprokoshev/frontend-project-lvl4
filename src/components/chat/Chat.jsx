@@ -4,11 +4,10 @@ import React, {useEffect, useRef} from 'react';
 import { useFormik } from 'formik';
 import { Button, Form, InputGroup } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { newMessage } from '../../features/content/contentSlice.js';
+import { newMessage } from '../../features/channelsInfo/channelsInfoSlice.js';
 import * as yup from 'yup';
 
 const Chat = () => {
-  const dispatch = useDispatch();
   const inputRef = useRef();
   useEffect(() => {
     inputRef.current.focus();
@@ -23,14 +22,13 @@ const Chat = () => {
     }),
     validateOnBlur: false,
     onSubmit: (values) => {
-      // const message =
-      dispatch(newMessage(message));
+      console.log(values);
       formik.resetForm();
     },
   });
 
-  const content = useSelector((state) => state.content.value);
-  const messages = content.messages
+  const messagesChat = useSelector((state) => state.messagesInfo.messages);
+  const messages = messagesChat
     .map((msg) => [msg.id, msg.author, msg.text]);
 
   const renderMessage = ([id, author, text]) => (

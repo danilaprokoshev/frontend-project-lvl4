@@ -14,6 +14,7 @@ import NotFoundPage from './NotFoundPage.jsx';
 import LoginPage from './LoginPage.jsx';
 import authContext from '../contexts/index.jsx';
 import useAuth from '../hooks/index.jsx';
+import { io } from 'socket.io-client';
 
 const AuthProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -56,6 +57,8 @@ const PrivateRoute = ({ children, exact, path }) => {
 };
 
 const App = () => {
+  const socket = io();
+  socket.connect();
   // useEffect(() => {
   //   localStorage.removeItem('userId');
   // }, []);

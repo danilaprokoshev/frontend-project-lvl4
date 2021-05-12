@@ -2,11 +2,15 @@
 
 import React from 'react';
 import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 
 const Channels = () => {
-  const content = useSelector((state) => state.content.value);
-  const channelTitles = content.channels
+  // const content = useSelector((state) => state.content.value);
+  const channels = useSelector((state) => state.channelsInfo.channels);
+  console.log(channels);
+  const channelTitles = channels
     .map((ch) => [ch.id, ch.name]);
+  console.log(channelTitles);
 
   const renderChannelTitle = ([channelId, channelName]) => (
     <li key={channelId} className="nav-item">

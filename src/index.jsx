@@ -8,13 +8,12 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import store from './store.js';
 import App from './components/App.jsx';
-import { io } from 'socket.io-client';
 
 if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
 }
 
-const socket = io();
+// const socket = io();
 // socket.on()
 // socket.emit('connect');
 // socket.on('connect', () => {
