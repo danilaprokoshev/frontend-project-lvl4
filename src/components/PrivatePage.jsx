@@ -1,11 +1,10 @@
 // @ts-check
 
 import axios from 'axios';
-import _ from 'lodash';
 import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { addChannel, setCurrentChannelId } from '../features/channelsInfo/channelsInfoSlice.js';
-import { addMessage } from '../features/messagesInfo/messagesInfoSlice';
+import { addMessages } from '../features/messagesInfo/messagesInfoSlice.js';
 import routes from '../routes.js';
 import Channels from './chat/Channels.jsx';
 import Chat from './chat/Chat.jsx';
@@ -27,15 +26,13 @@ const PrivatePage = () => {
       const { data: { channels, messages, currentChannelId } } = await axios
         .get(routes.usersPath(), { headers: getAuthHeader() });
       dispatch(addChannel(channels));
-      dispatch(addMessage(messages));
+      dispatch(addMessages(messages));
       dispatch(setCurrentChannelId(currentChannelId));
     };
 
     fetchContent();
   }, []);
 
-  // const channels = useSelector((state) => state.channelsInfo.channels);
-  // const messages = useSelector((state) => state.messagesInfo.messages);
   return (
     <div className="row flex-grow-1 h-75 pb-3">
       <div className="col-3 border-right">
