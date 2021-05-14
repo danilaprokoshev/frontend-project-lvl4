@@ -9,14 +9,15 @@ import {
   Link,
 } from 'react-router-dom';
 import { Navbar, Nav } from 'react-bootstrap';
+import { io } from 'socket.io-client';
+import { useDispatch } from 'react-redux';
 import PrivatePage from './PrivatePage.jsx';
 import NotFoundPage from './NotFoundPage.jsx';
 import LoginPage from './LoginPage.jsx';
 import authContext from '../contexts/authorization.jsx';
 import useAuth from '../hooks/authorization.jsx';
-import { io } from 'socket.io-client';
 import socketContext from '../contexts/socket.jsx';
-import { useDispatch } from 'react-redux';
+
 import { addMessage } from '../features/messagesInfo/messagesInfoSlice.js';
 
 const SocketProvider = ({ children }) => {
@@ -98,7 +99,8 @@ const PrivateRoute = ({ children, exact, path }) => {
     />
   );
 };
-
+// TODO: структурировать компненты (и другие модули) и их выбор через index.js (mapping)
+// https://ru.hexlet.io/challenges/js_react_modals/instance
 const App = () => (
   <SocketProvider>
     <AuthProvider>

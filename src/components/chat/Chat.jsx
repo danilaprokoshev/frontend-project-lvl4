@@ -8,6 +8,8 @@ import * as yup from 'yup';
 import useSocket from '../../hooks/socket.jsx';
 
 const Chat = () => {
+  // TODO: вынести селекторы в отдельный модуль, и переиспользовать каждый раз
+  const currentChannelId = useSelector((state) => state.channelsInfo.currentChannelId);
   const getUsername = () => {
     const user = localStorage.getItem('userId');
     const userInfo = JSON.parse(user);
@@ -34,6 +36,7 @@ const Chat = () => {
       const msg = {
         ...values,
         username,
+        channelId: currentChannelId,
       };
       socket.sendMessage(msg);
       formik.resetForm();
@@ -42,6 +45,7 @@ const Chat = () => {
 
   const messagesChat = useSelector((state) => state.messagesInfo.messages);
   const messages = messagesChat
+    .filter(({ channelId }) => channelId === currentChannelId)
     .map((msg) => [msg.body, msg.id, msg.username]);
 
   const renderMessage = ([body, id, username]) => (
