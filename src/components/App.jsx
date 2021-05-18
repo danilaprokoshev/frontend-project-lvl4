@@ -19,6 +19,7 @@ import useAuth from '../hooks/authorization.jsx';
 import socketContext from '../contexts/socket.jsx';
 
 import { addMessage } from '../features/messagesInfo/messagesInfoSlice.js';
+import { addChannel, setCurrentChannelId } from '../features/channelsInfo/channelsInfoSlice.js';
 
 const SocketProvider = ({ children }) => {
   const dispatch = useDispatch();
@@ -26,6 +27,10 @@ const SocketProvider = ({ children }) => {
   socket.connect();
   socket.on('newMessage', (msg) => {
     dispatch(addMessage(msg));
+  });
+  socket.on('newChannel', (channel) => {
+    dispatch(addChannel(channel));
+    dispatch(setCurrentChannelId(channel.id));
   });
 
   const withTimeout = (onSuccess, onTimeout, timeout) => {
@@ -53,8 +58,16 @@ const SocketProvider = ({ children }) => {
     }, 1000));
   };
 
+  const createChannel = (channel) => {
+    socket.emit('newChannel', channel, withTimeout(() => {
+      console.log('success!');
+    }, () => {
+      console.log('timeout!');
+    }, 1000));
+  };
+
   return (
-    <socketContext.Provider value={{ sendMessage }}>
+    <socketContext.Provider value={{ sendMessage, createChannel }}>
       {children}
     </socketContext.Provider>
   );

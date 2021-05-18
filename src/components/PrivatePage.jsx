@@ -3,7 +3,7 @@
 import axios from 'axios';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { addChannel, setCurrentChannelId } from '../features/channelsInfo/channelsInfoSlice.js';
+import { addChannels, setCurrentChannelId } from '../features/channelsInfo/channelsInfoSlice.js';
 import { addMessages } from '../features/messagesInfo/messagesInfoSlice.js';
 import routes from '../routes.js';
 import Channels from './chat/Channels.jsx';
@@ -25,7 +25,7 @@ const PrivatePage = () => {
       // TODO: добавить обработку ошибок
       const { data: { channels, messages, currentChannelId } } = await axios
         .get(routes.usersPath(), { headers: getAuthHeader() });
-      dispatch(addChannel(channels));
+      dispatch(addChannels(channels));
       dispatch(addMessages(messages));
       dispatch(setCurrentChannelId(currentChannelId));
     };
