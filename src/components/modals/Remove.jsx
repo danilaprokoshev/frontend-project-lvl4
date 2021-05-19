@@ -5,11 +5,14 @@ import { Button, Modal } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import useSocket from '../../hooks/socket.jsx';
 
-const Remove = ({ onHide }) => {
+const Remove = (props) => {
+  const { onHide } = props;
+  console.log(props);
   const channel = useSelector((state) => state.modal.extra);
   const socket = useSocket();
   const isOpened = useSelector((state) => state.modal.isOpened);
   const handleRemoveChannel = () => {
+    // TODO: реализовать блокировку кнопки во время отправки сокета
     socket.removeChannel(channel);
     onHide();
   };

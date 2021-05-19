@@ -4,7 +4,13 @@ import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { Button, Form, FormControl, FormGroup, Modal } from 'react-bootstrap';
+import {
+  Button,
+  Form,
+  FormControl,
+  FormGroup,
+  Modal,
+} from 'react-bootstrap';
 import useSocket from '../../hooks/socket.jsx';
 
 const Rename = ({ onHide }) => {
@@ -28,17 +34,20 @@ const Rename = ({ onHide }) => {
     validationSchema: yup.object({
       body: yup.string()
         .required('Required')
+        .min(3, 'От 3 до 20 символов')
+        .max(20, 'От 3 до 20 символов')
         .notOneOf(channelsNames, 'Должно быть уникальным'),
     }),
     validateOnBlur: false,
     validateOnChange: false,
-    onSubmit: (values) => {
+    onSubmit: (values, { setSubmitting }) => {
       const { id } = channel;
       const renamedChannel = {
         id,
         name: values.body,
       };
       socket.renameChannel(renamedChannel);
+      setSubmitting(false);
       onHide();
     },
   });

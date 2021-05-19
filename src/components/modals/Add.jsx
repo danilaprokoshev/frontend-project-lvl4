@@ -31,15 +31,18 @@ const Add = ({ onHide }) => {
     validationSchema: yup.object({
       body: yup.string()
         .required('Required')
+        .min(3, 'От 3 до 20 символов')
+        .max(20, 'От 3 до 20 символов')
         .notOneOf(channelsNames, 'Должно быть уникальным'),
     }),
     validateOnBlur: false,
     validateOnChange: false,
-    onSubmit: (values) => {
+    onSubmit: (values, { setSubmitting }) => {
       const channel = {
         name: values.body,
       };
       socket.createChannel(channel);
+      setSubmitting(false);
       onHide();
     },
   });

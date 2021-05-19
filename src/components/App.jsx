@@ -18,9 +18,13 @@ import authContext from '../contexts/authorization.jsx';
 import useAuth from '../hooks/authorization.jsx';
 import socketContext from '../contexts/socket.jsx';
 
-import { addMessage } from '../features/messagesInfo/messagesInfoSlice.js';
-import { addChannel, setCurrentChannelId, deleteChannel, changeNameChannel } from '../features/channelsInfo/channelsInfoSlice.js';
-import { deleteMessages } from "../features/messagesInfo/messagesInfoSlice.js";
+import { addMessage, deleteMessages } from '../features/messagesInfo/messagesInfoSlice.js';
+import {
+  addChannel,
+  setCurrentChannelId,
+  deleteChannel,
+  changeNameChannel,
+} from '../features/channelsInfo/channelsInfoSlice.js';
 
 const SocketProvider = ({ children }) => {
   const dispatch = useDispatch();
@@ -91,7 +95,13 @@ const SocketProvider = ({ children }) => {
   };
 
   return (
-    <socketContext.Provider value={{ sendMessage, createChannel, removeChannel, renameChannel }}>
+    <socketContext.Provider value={{
+      sendMessage,
+      createChannel,
+      removeChannel,
+      renameChannel,
+    }}
+    >
       {children}
     </socketContext.Provider>
   );

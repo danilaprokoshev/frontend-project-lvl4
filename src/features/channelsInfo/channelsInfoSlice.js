@@ -31,6 +31,12 @@ export const channelsInfoSlice = createSlice({
   },
 });
 
-export const { addChannels, addChannel, setCurrentChannelId, deleteChannel, changeNameChannel } = channelsInfoSlice.actions;
+export const {
+  addChannels,
+  addChannel,
+  setCurrentChannelId,
+  deleteChannel,
+  changeNameChannel,
+} = channelsInfoSlice.actions;
 
 export default channelsInfoSlice.reducer;
