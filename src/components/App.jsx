@@ -19,7 +19,8 @@ import useAuth from '../hooks/authorization.jsx';
 import socketContext from '../contexts/socket.jsx';
 
 import { addMessage } from '../features/messagesInfo/messagesInfoSlice.js';
-import { addChannel, setCurrentChannelId } from '../features/channelsInfo/channelsInfoSlice.js';
+import { addChannel, setCurrentChannelId, deleteChannel } from '../features/channelsInfo/channelsInfoSlice.js';
+import { deleteMessages } from "../features/messagesInfo/messagesInfoSlice.js";
 
 const SocketProvider = ({ children }) => {
   const dispatch = useDispatch();
@@ -31,6 +32,10 @@ const SocketProvider = ({ children }) => {
   socket.on('newChannel', (channel) => {
     dispatch(addChannel(channel));
     dispatch(setCurrentChannelId(channel.id));
+  });
+  socket.on('removeChannel', ({ id }) => {
+    dispatch(deleteChannel(id));
+    dispatch(deleteMessages(id));
   });
 
   const withTimeout = (onSuccess, onTimeout, timeout) => {
@@ -66,8 +71,16 @@ const SocketProvider = ({ children }) => {
     }, 1000));
   };
 
+  const removeChannel = (channel) => {
+    socket.emit('removeChannel', channel, withTimeout(() => {
+      console.log('success!');
+    }, () => {
+      console.log('timeout!');
+    }, 1000));
+  };
+
   return (
-    <socketContext.Provider value={{ sendMessage, createChannel }}>
+    <socketContext.Provider value={{ sendMessage, createChannel, removeChannel }}>
       {children}
     </socketContext.Provider>
   );

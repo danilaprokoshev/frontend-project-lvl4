@@ -63,7 +63,11 @@ const Add = ({ onHide }) => {
               isInvalid={formik.errors.body}
               name="body"
             />
-            <FormControl.Feedback type="invalid">{formik.errors.body}</FormControl.Feedback>
+            <FormControl.Feedback
+              type="invalid"
+            >
+              {formik.errors.body}
+            </FormControl.Feedback>
           </FormGroup>
           <div className="d-flex justify-content-end">
             <Button className="mr-2 btn btn-secondary" onClick={onHide}>

@@ -13,8 +13,6 @@ const Channels = () => {
   const channels = useSelector((state) => state.channelsInfo.channels);
   const currentChannelId = useSelector((state) => state.channelsInfo.currentChannelId);
   const modal = useSelector((state) => state.modal);
-  const channelTitles = channels
-    .map((ch) => [ch.id, ch.name, ch.removable]);
 
   const handleSelectChannel = (id) => (e) => {
     e.target.blur();
@@ -22,14 +20,19 @@ const Channels = () => {
   };
 
   const handleAddChannel = () => {
-    dispatch(openModal('adding'));
+    dispatch(openModal({ type: 'adding', extra: null }));
   };
 
-  const handleRemoveChannel = () => {
-    dispatch(openModal('removing'));
+  const handleRemoveChannel = (channel) => () => {
+    dispatch(openModal({ type: 'removing', extra: channel }));
   };
 
-  const renderChannelTitle = ([channelId, channelName, removable]) => {
+  const handleRenameChannel = (channel) => () => {
+    dispatch(openModal({ type: 'renaming', extra: channel }));
+  };
+
+  const renderChannelTitle = (channel) => {
+    const { id, name, removable } = channel;
     const buttonClasses = cn({
       'nav-link': true,
       'btn-block': !removable,
@@ -37,45 +40,45 @@ const Channels = () => {
       'text-left': true,
       'flex-grow-1': removable,
       btn: true,
-      'btn-light': channelId !== currentChannelId,
-      'btn-primary': channelId === currentChannelId,
+      'btn-light': id !== currentChannelId,
+      'btn-primary': id === currentChannelId,
     });
     const dropdownButtonClasses = cn({
       'flex-grow-0': true,
       'dropdown-toggle': true,
       'dropdown-toggle-split': true,
       btn: true,
-      'btn-light': channelId !== currentChannelId,
-      'btn-primary': channelId === currentChannelId,
+      'btn-light': id !== currentChannelId,
+      'btn-primary': id === currentChannelId,
     });
 
     if (!removable) {
       return (
-        <li key={channelId} className="nav-item">
+        <li key={id} className="nav-item">
           <button
             type="button"
             className={buttonClasses}
-            onClick={handleSelectChannel(channelId)}
+            onClick={handleSelectChannel(id)}
           >
-            {channelName}
+            {name}
           </button>
         </li>
       );
     }
 
     return (
-      <li key={channelId} className="nav-item">
+      <li key={id} className="nav-item">
         <Dropdown as={ButtonGroup} className="d-flex mb-2">
           <Button
             className={buttonClasses}
-            onClick={handleSelectChannel(channelId)}
+            onClick={handleSelectChannel(id)}
           >
-            {channelName}
+            {name}
           </Button>
           <Dropdown.Toggle className={dropdownButtonClasses} />
           <Dropdown.Menu>
-            <Dropdown.Item href="#" onClick={handleRemoveChannel}>Удалить</Dropdown.Item>
-            <Dropdown.Item href="#">Переименовать</Dropdown.Item>
+            <Dropdown.Item href="#" onClick={handleRemoveChannel(channel)}>Удалить</Dropdown.Item>
+            <Dropdown.Item href="#" onClick={handleRenameChannel(channel)}>Переименовать</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       </li>
@@ -102,7 +105,7 @@ const Channels = () => {
         <button type="button" className="ml-auto p-0 btn btn-link" onClick={handleAddChannel}>+</button>
       </div>
       <ul className="nav flex-column nav-pills nav-fill">
-        {channelTitles.length > 0 && channelTitles.map(renderChannelTitle)}
+        {channels.length > 0 && channels.map(renderChannelTitle)}
       </ul>
       {renderModal(modal)}
     </>
