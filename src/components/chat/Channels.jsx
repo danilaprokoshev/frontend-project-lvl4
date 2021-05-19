@@ -41,7 +41,7 @@ const Channels = () => {
       'flex-grow-1': removable,
       btn: true,
       'btn-light': id !== currentChannelId,
-      'btn-primary': id === currentChannelId,
+      'btn-dark': id === currentChannelId,
     });
     const dropdownButtonClasses = cn({
       'flex-grow-0': true,
@@ -49,7 +49,7 @@ const Channels = () => {
       'dropdown-toggle-split': true,
       btn: true,
       'btn-light': id !== currentChannelId,
-      'btn-primary': id === currentChannelId,
+      'btn-dark': id === currentChannelId,
     });
 
     if (!removable) {
@@ -102,7 +102,7 @@ const Channels = () => {
     <>
       <div className="d-flex mb-2">
         <span>Каналы</span>
-        <button type="button" className="ml-auto p-0 btn btn-link" onClick={handleAddChannel}>+</button>
+        <button type="button" className="ml-auto p-0 text-dark btn btn-link" onClick={handleAddChannel}>+</button>
       </div>
       <ul className="nav flex-column nav-pills nav-fill">
         {channels.length > 0 && channels.map(renderChannelTitle)}

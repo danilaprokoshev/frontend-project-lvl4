@@ -76,7 +76,11 @@ const LoginPage = () => {
               />
               <Form.Control.Feedback type="invalid">Неверные имя пользователя или пароль</Form.Control.Feedback>
             </Form.Group>
-            <Button type="submit" variant="primary">Войти</Button>
+            <Button type="submit" className="w-100 mb-3" variant="outline-dark">Войти</Button>
+            <div className="d-flex flex-column align-items-center">
+              <span className="small mb-2">Нет аккаунта?</span>
+              <a className="text-dark" href="/signup">Регистрация</a>
+            </div>
           </Form>
         </div>
       </div>

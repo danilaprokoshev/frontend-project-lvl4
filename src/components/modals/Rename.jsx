@@ -81,7 +81,7 @@ const Rename = ({ onHide }) => {
             <Button className="mr-2 btn btn-secondary" onClick={onHide}>
               Отменить
             </Button>
-            <Button type="submit" variant="primary">
+            <Button type="submit" variant="dark">
               Отправить
             </Button>
           </div>

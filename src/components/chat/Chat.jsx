@@ -28,7 +28,7 @@ const Chat = () => {
     },
     validationSchema: yup.object({
       body: yup.string()
-        .required('Required'),
+        .required('Обязательное поле'),
     }),
     validateOnBlur: false,
     onSubmit: (values) => {
@@ -75,7 +75,7 @@ const Chat = () => {
                 ref={inputRef}
               />
               <InputGroup.Append>
-                <Button type="submit" variant="primary">Отправить</Button>
+                <Button type="submit" variant="dark">Отправить</Button>
               </InputGroup.Append>
               <Form.Control.Feedback type="invalid">Required</Form.Control.Feedback>
             </InputGroup>

@@ -14,6 +14,7 @@ import { useDispatch } from 'react-redux';
 import PrivatePage from './PrivatePage.jsx';
 import NotFoundPage from './NotFoundPage.jsx';
 import LoginPage from './LoginPage.jsx';
+import SignupPage from './SignupPage.jsx';
 import authContext from '../contexts/authorization.jsx';
 import useAuth from '../hooks/authorization.jsx';
 import socketContext from '../contexts/socket.jsx';
@@ -153,7 +154,7 @@ const App = () => (
     <AuthProvider>
       <Router>
         <div className="d-flex flex-column h-100">
-          <Navbar className="mb-3" variant="dark" bg="dark" expand="lg">
+          <Navbar className="mb-3 navbar-brand" variant="dark" bg="dark" expand="lg">
             <Nav className="mr-auto">
               <Nav.Link as={Link} to="/">Hexlet Chat</Nav.Link>
             </Nav>
@@ -161,6 +162,9 @@ const App = () => (
           <Switch>
             <Route exact path="/login">
               <LoginPage />
+            </Route>
+            <Route exact path="/signup">
+              <SignupPage />
             </Route>
             <PrivateRoute exact path="/">
               <PrivatePage />
