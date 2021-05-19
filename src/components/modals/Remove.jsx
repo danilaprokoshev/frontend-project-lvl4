@@ -1,9 +1,9 @@
 // @ts-check
 
 import React from 'react';
-import {Button, Modal} from "react-bootstrap";
-import { useSelector } from "react-redux";
-import useSocket from "../../hooks/socket";
+import { Button, Modal } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
+import useSocket from '../../hooks/socket.jsx';
 
 const Remove = ({ onHide }) => {
   const channel = useSelector((state) => state.modal.extra);

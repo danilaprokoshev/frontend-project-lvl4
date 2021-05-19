@@ -19,7 +19,7 @@ import useAuth from '../hooks/authorization.jsx';
 import socketContext from '../contexts/socket.jsx';
 
 import { addMessage } from '../features/messagesInfo/messagesInfoSlice.js';
-import { addChannel, setCurrentChannelId, deleteChannel } from '../features/channelsInfo/channelsInfoSlice.js';
+import { addChannel, setCurrentChannelId, deleteChannel, changeNameChannel } from '../features/channelsInfo/channelsInfoSlice.js';
 import { deleteMessages } from "../features/messagesInfo/messagesInfoSlice.js";
 
 const SocketProvider = ({ children }) => {
@@ -36,6 +36,9 @@ const SocketProvider = ({ children }) => {
   socket.on('removeChannel', ({ id }) => {
     dispatch(deleteChannel(id));
     dispatch(deleteMessages(id));
+  });
+  socket.on('renameChannel', (channel) => {
+    dispatch(changeNameChannel(channel));
   });
 
   const withTimeout = (onSuccess, onTimeout, timeout) => {
@@ -79,8 +82,16 @@ const SocketProvider = ({ children }) => {
     }, 1000));
   };
 
+  const renameChannel = (channel) => {
+    socket.emit('renameChannel', channel, withTimeout(() => {
+      console.log('success!');
+    }, () => {
+      console.log('timeout!');
+    }, 1000));
+  };
+
   return (
-    <socketContext.Provider value={{ sendMessage, createChannel, removeChannel }}>
+    <socketContext.Provider value={{ sendMessage, createChannel, removeChannel, renameChannel }}>
       {children}
     </socketContext.Provider>
   );

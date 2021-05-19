@@ -1,17 +1,18 @@
 // @ts-check
 
 import React, { useEffect, useRef } from 'react';
-import useSocket from '../../hooks/socket.jsx';
 import { useSelector } from 'react-redux';
 import { useFormik } from 'formik';
-import * as yup from "yup";
-import {Button, Form, FormControl, FormGroup, Modal} from "react-bootstrap";
+import * as yup from 'yup';
+import { Button, Form, FormControl, FormGroup, Modal } from 'react-bootstrap';
+import useSocket from '../../hooks/socket.jsx';
 
 const Rename = ({ onHide }) => {
   const socket = useSocket();
+  const channel = useSelector((state) => state.modal.extra);
   const inputRef = useRef();
   useEffect(() => {
-    inputRef.current.focus();
+    inputRef.current.select();
   }, []);
   const isOpened = useSelector((state) => state.modal.isOpened);
   const modal = useSelector((state) => state.modal);
@@ -32,7 +33,13 @@ const Rename = ({ onHide }) => {
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: (values) => {
-      console.log(values);
+      const { id } = channel;
+      const renamedChannel = {
+        id,
+        name: values.body,
+      };
+      socket.renameChannel(renamedChannel);
+      onHide();
     },
   });
 
@@ -74,3 +81,5 @@ const Rename = ({ onHide }) => {
     </Modal>
   );
 };
+
+export default Rename;
