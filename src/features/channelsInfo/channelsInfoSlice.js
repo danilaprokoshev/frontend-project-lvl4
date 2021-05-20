@@ -9,7 +9,7 @@ export const channelsInfoSlice = createSlice({
   },
   reducers: {
     addChannels: (state, action) => {
-      state.channels.push(...action.payload);
+      state.channels = action.payload;
     },
     addChannel: (state, action) => {
       state.channels.push(action.payload);

@@ -47,7 +47,7 @@ const Chat = () => {
   const messages = messagesChat
     .filter(({ channelId }) => channelId === currentChannelId)
     .map((msg) => [msg.body, msg.id, msg.username]);
-
+  // TODO: добавить скроллинг вниз, когда сообщений много
   const renderMessage = ([body, id, username]) => (
     <div key={id} className="text-break">
       <b>{username}</b>

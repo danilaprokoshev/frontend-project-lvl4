@@ -1,6 +1,6 @@
 // @ts-check
 
-import React, { useState } from 'react';
+import React from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -8,14 +8,13 @@ import {
   Redirect,
   Link,
 } from 'react-router-dom';
-import { Navbar, Nav } from 'react-bootstrap';
+import { Navbar, Nav, Button } from 'react-bootstrap';
 import { io } from 'socket.io-client';
 import { useDispatch } from 'react-redux';
 import PrivatePage from './PrivatePage.jsx';
 import NotFoundPage from './NotFoundPage.jsx';
 import LoginPage from './LoginPage.jsx';
 import SignupPage from './SignupPage.jsx';
-import authContext from '../contexts/authorization.jsx';
 import useAuth from '../hooks/authorization.jsx';
 import socketContext from '../contexts/socket.jsx';
 
@@ -108,56 +107,47 @@ const SocketProvider = ({ children }) => {
   );
 };
 
-const AuthProvider = ({ children }) => {
-  const [loggedIn, setLoggedIn] = useState(false);
-
-  const logIn = () => setLoggedIn(true);
-
-  return (
-    <authContext.Provider value={{ loggedIn, logIn }}>
-      {children}
-    </authContext.Provider>
-  );
-};
-
 const isAuthenticated = () => {
   const userId = JSON.parse(localStorage.getItem('userId'));
 
   return (userId && userId.token);
 };
 
-const PrivateRoute = ({ children, exact, path }) => {
-  const auth = useAuth();
-  return (
-    <Route
-      exact={exact}
-      path={path}
-      render={({ location }) => (((auth.loggedIn && isAuthenticated()))
-        ? (
-          children
-        )
-        : (
-          <Redirect
-            to={{
-              pathname: '/login',
-              state: { from: location },
-            }}
-          />
-        ))}
-    />
-  );
-};
+const PrivateRoute = ({
+  children,
+  exact,
+  path,
+}) => (
+  <Route
+    exact={exact}
+    path={path}
+    render={({ location }) => (((isAuthenticated()))
+      ? (
+        children
+      )
+      : (
+        <Redirect
+          to={{
+            pathname: '/login',
+            state: { from: location },
+          }}
+        />
+      ))}
+  />
+);
+
 // TODO: структурировать компненты (и другие модули) и их выбор через index.js (mapping)
 // https://ru.hexlet.io/challenges/js_react_modals/instance
-const App = () => (
-  <SocketProvider>
-    <AuthProvider>
+const App = () => {
+  const auth = useAuth();
+
+  return (
+    <SocketProvider>
       <Router>
         <div className="d-flex flex-column h-100">
-          <Navbar className="mb-3 navbar-brand" variant="dark" bg="dark" expand="lg">
-            <Nav className="mr-auto">
-              <Nav.Link as={Link} to="/">Hexlet Chat</Nav.Link>
-            </Nav>
+          <Navbar className="mb-3 navbar navbar-expand-lg navbar-dark bg-dark">
+            <Nav.Link className="mr-auto navbar-brand" as={Link} to="/">Hexlet Chat</Nav.Link>
+            {auth.user && <Button variant="outline-light" onClick={auth.logOut}>Выйти</Button>}
           </Navbar>
           <Switch>
             <Route exact path="/login">
@@ -176,8 +166,8 @@ const App = () => (
           </Switch>
         </div>
       </Router>
-    </AuthProvider>
-  </SocketProvider>
-);
+    </SocketProvider>
+  );
+};
 
 export default App;
