@@ -6,17 +6,12 @@ import { Button, Form, InputGroup } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import * as yup from 'yup';
 import useSocket from '../../hooks/socket.jsx';
+import useAuth from '../../hooks/authorization.jsx';
 
 const Chat = () => {
+  const auth = useAuth();
   // TODO: вынести селекторы в отдельный модуль, и переиспользовать каждый раз
   const currentChannelId = useSelector((state) => state.channelsInfo.currentChannelId);
-  const getUsername = () => {
-    const user = localStorage.getItem('userId');
-    const userInfo = JSON.parse(user);
-
-    return userInfo.username;
-  };
-
   const inputRef = useRef();
   const socket = useSocket();
   useEffect(() => {
@@ -32,7 +27,7 @@ const Chat = () => {
     }),
     validateOnBlur: false,
     onSubmit: (values) => {
-      const username = getUsername();
+      const { username } = auth.user;
       const msg = {
         ...values,
         username,
