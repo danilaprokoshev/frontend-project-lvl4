@@ -11,9 +11,11 @@ import {
   Form,
 } from 'react-bootstrap';
 import * as yup from 'yup';
+import { useTranslation } from 'react-i18next';
 import useSocket from '../../hooks/socket.jsx';
 
 const Add = ({ onHide }) => {
+  const { t } = useTranslation();
   const socket = useSocket();
   const inputRef = useRef();
   useEffect(() => {
@@ -50,7 +52,7 @@ const Add = ({ onHide }) => {
   return (
     <Modal show={isOpened} onHide={onHide}>
       <Modal.Header closeButton>
-        <Modal.Title>Добавить канал</Modal.Title>
+        <Modal.Title>{t('modals.adding.title')}</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
@@ -74,10 +76,10 @@ const Add = ({ onHide }) => {
           </FormGroup>
           <div className="d-flex justify-content-end">
             <Button className="mr-2 btn btn-secondary" onClick={onHide}>
-              Отменить
+              {t('modals.adding.cancel')}
             </Button>
             <Button type="submit" variant="dark">
-              Отправить
+              {t('modals.adding.send')}
             </Button>
           </div>
         </Form>

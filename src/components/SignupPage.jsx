@@ -6,10 +6,12 @@ import { useFormik } from 'formik';
 import { Button, Form } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import * as yup from 'yup';
+import { useTranslation } from 'react-i18next';
 import useAuth from '../hooks/authorization.jsx';
 import routes from '../routes.js';
 
 const SignupPage = () => {
+  const { t } = useTranslation();
   const [signupFailed, setSignupFailed] = useState(false);
   const auth = useAuth();
   const history = useHistory();
@@ -26,15 +28,15 @@ const SignupPage = () => {
     },
     validationSchema: yup.object({
       username: yup.string()
-        .required('Обязательное поле')
-        .min(3, 'От 3 до 20 символов')
-        .max(20, 'От 3 до 20 символов'),
+        .required(t('form_errors.required'))
+        .min(3, t('form_errors.required_length'))
+        .max(20, t('form_errors.required_length')),
       password: yup.string()
-        .required('Обязательное поле')
-        .min(6, 'Не менее 6 символов'),
+        .required(t('form_errors.required'))
+        .min(6, t('form_errors.min_length')),
       confirmPassword: yup.string()
-        .required('Обязательное поле')
-        .oneOf([yup.ref('password'), null], 'Пароли должны совпадать'),
+        .required(t('form_errors.required'))
+        .oneOf([yup.ref('password'), null], t('form_errors.password_equals')),
     }),
     onSubmit: async ({ username, password }) => {
       try {
@@ -57,12 +59,12 @@ const SignupPage = () => {
         <div className="col-sm-4">
           <Form onSubmit={formik.handleSubmit} className="p-3">
             <Form.Group>
-              <Form.Label htmlFor="username">Имя пользователя</Form.Label>
+              <Form.Label htmlFor="username">{t('signup.username_label')}</Form.Label>
               <Form.Control
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.username}
-                placeholder="От 3 до 20 символов"
+                placeholder={t('signup.username_placeholder')}
                 name="username"
                 id="username"
                 autoComplete="username"
@@ -79,13 +81,13 @@ const SignupPage = () => {
               ) : null}
             </Form.Group>
             <Form.Group>
-              <Form.Label htmlFor="password">Пароль</Form.Label>
+              <Form.Label htmlFor="password">{t('signup.password_label')}</Form.Label>
               <Form.Control
                 type="password"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.password}
-                placeholder="Не менее 6 символов"
+                placeholder={t('signup.password_placeholder')}
                 name="password"
                 id="password"
                 autoComplete="new-password"
@@ -101,13 +103,13 @@ const SignupPage = () => {
               ) : null}
             </Form.Group>
             <Form.Group>
-              <Form.Label htmlFor="confirmPassword">Подтвердите пароль</Form.Label>
+              <Form.Label htmlFor="confirmPassword">{t('signup.confirm_password_label')}</Form.Label>
               <Form.Control
                 type="password"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.confirmPassword}
-                placeholder="Пароли должны совпадать"
+                placeholder={t('signup.confirm_password_placeholder')}
                 name="confirmPassword"
                 id="confirmPassword"
                 autoComplete="new-password"
@@ -128,11 +130,11 @@ const SignupPage = () => {
                 <Form.Control.Feedback
                   type="invalid"
                 >
-                  Такой пользователь уже существует
+                  {t('signup.invalid_user')}
                 </Form.Control.Feedback>
               )}
             </Form.Group>
-            <Button type="submit" className="w-100 mb-3" variant="outline-dark">Зарегистрироваться</Button>
+            <Button type="submit" className="w-100 mb-3" variant="outline-dark">{t('signup.sign_up')}</Button>
           </Form>
         </div>
       </div>

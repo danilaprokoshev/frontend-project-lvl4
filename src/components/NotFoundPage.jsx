@@ -2,18 +2,21 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
-const NotFoundPage = () => (
-  <div>
-    <p style={{ textAlign: 'center' }}>
-      <h2>404</h2>
-      <h3>Такой страницы нет!</h3>
-      <hr />
-      <Link className="text-dark" to="/">Перейти на главную </Link>
-      {/* TODO: реализовать подстановку текста через i18n */}
-      {/* TODO: реализовать подгрузку картинки об ошибке 404 */}
-    </p>
-  </div>
-);
+const NotFoundPage = () => {
+  const { t } = useTranslation();
+  return (
+    <div>
+      <p style={{ textAlign: 'center' }}>
+        <h2>{t('not_found.error_code')}</h2>
+        <h3>{t('not_found.not_found_page')}</h3>
+        <hr />
+        <Link className="text-dark" to="/">{t('not_found.link_to_main')}</Link>
+        {/* TODO: реализовать подгрузку картинки об ошибке 404 */}
+      </p>
+    </div>
+  );
+};
 
 export default NotFoundPage;

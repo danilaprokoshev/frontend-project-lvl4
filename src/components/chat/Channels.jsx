@@ -4,11 +4,13 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, ButtonGroup, Dropdown } from 'react-bootstrap';
 import cn from 'classnames';
+import { useTranslation } from 'react-i18next';
 import { setCurrentChannelId } from '../../features/channelsInfo/channelsInfoSlice.js';
 import { openModal, hideModal } from '../../features/modal/modalSlice.js';
 import getModal from '../modals/index.js';
 
 const Channels = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const channels = useSelector((state) => state.channelsInfo.channels);
   const currentChannelId = useSelector((state) => state.channelsInfo.currentChannelId);
@@ -77,8 +79,8 @@ const Channels = () => {
           </Button>
           <Dropdown.Toggle className={dropdownButtonClasses} />
           <Dropdown.Menu>
-            <Dropdown.Item href="#" onClick={handleRemoveChannel(channel)}>Удалить</Dropdown.Item>
-            <Dropdown.Item href="#" onClick={handleRenameChannel(channel)}>Переименовать</Dropdown.Item>
+            <Dropdown.Item href="#" onClick={handleRemoveChannel(channel)}>{t('channels.remove')}</Dropdown.Item>
+            <Dropdown.Item href="#" onClick={handleRenameChannel(channel)}>{t('channels.rename')}</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       </li>
@@ -101,7 +103,7 @@ const Channels = () => {
   return (
     <>
       <div className="d-flex mb-2">
-        <span>Каналы</span>
+        <span>{t('channels.channels')}</span>
         <button type="button" className="ml-auto p-0 text-dark btn btn-link" onClick={handleAddChannel}>+</button>
       </div>
       <ul className="nav flex-column nav-pills nav-fill">

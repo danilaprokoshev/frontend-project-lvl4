@@ -11,9 +11,11 @@ import {
   FormGroup,
   Modal,
 } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import useSocket from '../../hooks/socket.jsx';
 
 const Rename = ({ onHide }) => {
+  const { t } = useTranslation();
   const socket = useSocket();
   const channel = useSelector((state) => state.modal.extra);
   const inputRef = useRef();
@@ -55,7 +57,7 @@ const Rename = ({ onHide }) => {
   return (
     <Modal show={isOpened} onHide={onHide}>
       <Modal.Header closeButton>
-        <Modal.Title>Переименовать канал</Modal.Title>
+        <Modal.Title>{t('modals.renaming.title')}</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
@@ -79,10 +81,10 @@ const Rename = ({ onHide }) => {
           </FormGroup>
           <div className="d-flex justify-content-end">
             <Button className="mr-2 btn btn-secondary" onClick={onHide}>
-              Отменить
+              {t('modals.renaming.cancel')}
             </Button>
             <Button type="submit" variant="dark">
-              Отправить
+              {t('modals.renaming.send')}
             </Button>
           </div>
         </Form>

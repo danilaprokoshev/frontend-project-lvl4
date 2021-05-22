@@ -5,12 +5,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useFormik } from 'formik';
 import { Button, Form } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import useAuth from '../hooks/authorization.jsx';
 import routes from '../routes.js';
 
-// TODO: реализовать вставку текста интерфейса через i18n
-
 const LoginPage = () => {
+  const { t } = useTranslation();
   const auth = useAuth();
   const [authFailed, setAuthFailed] = useState(false);
   const inputRef = useRef();
@@ -47,11 +47,11 @@ const LoginPage = () => {
         <div className="col-sm-4">
           <Form onSubmit={formik.handleSubmit} className="p-3">
             <Form.Group>
-              <Form.Label htmlFor="username">Ваш ник</Form.Label>
+              <Form.Label htmlFor="username">{t('login.nick_label')}</Form.Label>
               <Form.Control
                 onChange={formik.handleChange}
                 value={formik.values.username}
-                placeholder="Введите ваш ник"
+                placeholder={t('login.nick_placeholder')}
                 name="username"
                 id="username"
                 autoComplete="username"
@@ -61,24 +61,24 @@ const LoginPage = () => {
               />
             </Form.Group>
             <Form.Group>
-              <Form.Label htmlFor="password">Пароль</Form.Label>
+              <Form.Label htmlFor="password">{t('login.password_nick')}</Form.Label>
               <Form.Control
                 type="password"
                 onChange={formik.handleChange}
                 value={formik.values.password}
-                placeholder="Пароль"
+                placeholder={t('login.password_placeholder')}
                 name="password"
                 id="password"
                 autoComplete="current-password"
                 isInvalid={authFailed}
                 required
               />
-              <Form.Control.Feedback type="invalid">Неверные имя пользователя или пароль</Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">{t('login.invalid_user')}</Form.Control.Feedback>
             </Form.Group>
-            <Button type="submit" className="w-100 mb-3" variant="outline-dark">Войти</Button>
+            <Button type="submit" className="w-100 mb-3" variant="outline-dark">{t('login.enter')}</Button>
             <div className="d-flex flex-column align-items-center">
-              <span className="small mb-2">Нет аккаунта?</span>
-              <a className="text-dark" href="/signup">Регистрация</a>
+              <span className="small mb-2">{t('login.account_exists')}</span>
+              <a className="text-dark" href="/signup">{t('login.ref_to_registration')}</a>
             </div>
           </Form>
         </div>

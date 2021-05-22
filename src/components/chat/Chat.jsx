@@ -5,10 +5,12 @@ import { useFormik } from 'formik';
 import { Button, Form, InputGroup } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import * as yup from 'yup';
+import { useTranslation } from 'react-i18next';
 import useSocket from '../../hooks/socket.jsx';
 import useAuth from '../../hooks/authorization.jsx';
 
 const Chat = () => {
+  const { t } = useTranslation();
   const auth = useAuth();
   // TODO: вынести селекторы в отдельный модуль, и переиспользовать каждый раз
   const currentChannelId = useSelector((state) => state.channelsInfo.currentChannelId);
@@ -23,7 +25,7 @@ const Chat = () => {
     },
     validationSchema: yup.object({
       body: yup.string()
-        .required('Обязательное поле'),
+        .required(t('form_errors.required')),
     }),
     validateOnBlur: false,
     onSubmit: (values) => {
@@ -70,9 +72,9 @@ const Chat = () => {
                 ref={inputRef}
               />
               <InputGroup.Append>
-                <Button type="submit" variant="dark">Отправить</Button>
+                <Button type="submit" variant="dark">{t('chat.send')}</Button>
               </InputGroup.Append>
-              <Form.Control.Feedback type="invalid">Required</Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">{formik.errors.body}</Form.Control.Feedback>
             </InputGroup>
           </Form>
         </div>
