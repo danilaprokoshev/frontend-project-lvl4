@@ -8,23 +8,16 @@ import { addMessages } from '../features/messagesInfo/messagesInfoSlice.js';
 import routes from '../routes.js';
 import Channels from './chat/Channels.jsx';
 import Chat from './chat/Chat.jsx';
-
-const getAuthHeader = () => {
-  const userId = JSON.parse(localStorage.getItem('userId'));
-  if (userId && userId.token) {
-    return { Authorization: `Bearer ${userId.token}` };
-  }
-
-  return {};
-};
+import useAuth from '../hooks/authorization.jsx';
 
 const PrivatePage = () => {
+  const auth = useAuth();
   const dispatch = useDispatch();
   useEffect(() => {
     const fetchContent = async () => {
       // TODO: добавить обработку ошибок
       const { data: { channels, messages, currentChannelId } } = await axios
-        .get(routes.usersPath(), { headers: getAuthHeader() });
+        .get(routes.usersPath(), { headers: auth.getAuthHeader() });
       dispatch(addChannels(channels));
       dispatch(addMessages(messages));
       dispatch(setCurrentChannelId(currentChannelId));

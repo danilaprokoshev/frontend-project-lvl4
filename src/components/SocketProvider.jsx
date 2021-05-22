@@ -15,7 +15,6 @@ import socketContext from '../contexts/socket.jsx';
 const SocketProvider = ({ children }) => {
   const dispatch = useDispatch();
   const socket = io();
-  socket.connect();
   socket.on('newMessage', (msg) => {
     dispatch(addMessage(msg));
   });
