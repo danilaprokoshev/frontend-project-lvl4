@@ -27,6 +27,7 @@ export default {
       required_length: 'От 3 до 20 символов',
       min_length: 'Не менее 6 символов',
       password_equals: 'Пароли должны совпадать',
+      unique_item: 'Должно быть уникальным',
     },
     not_found: {
       error_code: '404',

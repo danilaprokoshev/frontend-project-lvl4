@@ -35,10 +35,10 @@ const Rename = ({ onHide }) => {
     },
     validationSchema: yup.object({
       body: yup.string()
-        .required('Required')
-        .min(3, 'От 3 до 20 символов')
-        .max(20, 'От 3 до 20 символов')
-        .notOneOf(channelsNames, 'Должно быть уникальным'),
+        .required(t('form_errors.required'))
+        .min(3, t('form_errors.required_length'))
+        .max(20, t('form_errors.required_length'))
+        .notOneOf(channelsNames, t('form_errors.unique_item')),
     }),
     validateOnBlur: false,
     validateOnChange: false,
