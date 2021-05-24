@@ -1,8 +1,8 @@
 // @ts-check
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { io } from 'socket.io-client';
+// import { io } from 'socket.io-client';
 import { addMessage, deleteMessages } from '../features/messagesInfo/messagesInfoSlice.js';
 import {
   addChannel,
@@ -13,20 +13,19 @@ import {
 import socketContext from '../contexts/socket.jsx';
 import useAuth from '../hooks/authorization.jsx';
 
-const SocketProvider = ({ children }) => {
-  const auth = useAuth();
+const SocketProvider = ({ socket, children }) => {
+  const { user } = useAuth();
   const dispatch = useDispatch();
-  const socket = io();
   socket.on('newMessage', (msg) => {
     dispatch(addMessage(msg));
   });
   socket.on('newChannel', (channel) => {
     dispatch(addChannel(channel));
-    // if (auth.user) {
-    //   if (auth.user.username === channel.creator) {
-    //     dispatch(setCurrentChannelId(channel.id));
-    //   }
-    // }
+    if (user) {
+      if (user.username === channel.creator) {
+        dispatch(setCurrentChannelId(channel.id));
+      }
+    }
   });
   socket.on('removeChannel', ({ id }) => {
     dispatch(deleteChannel(id));

@@ -18,11 +18,11 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(initialState);
 
   const logIn = (data) => {
-    localStorage.setItem('userId', JSON.stringify(data));
     const { username } = data;
     setUser({
       username,
     });
+    localStorage.setItem('userId', JSON.stringify(data));
   };
 
   const logOut = () => {

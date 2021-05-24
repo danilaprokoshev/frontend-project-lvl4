@@ -2,7 +2,7 @@
   "name": "@hexlet/code",
   "version": "0.0.1",
   "description": "[![Actions Status](https://github.com/danilaprokoshev/frontend-project-lvl4/workflows/hexlet-check/badge.svg)](https://github.com/danilaprokoshev/frontend-project-lvl4/actions)",
-  "main": "src/index.jsx",
+  "main": "src/index.js",
   "type": "module",
   "engines": {
     "node": "15.x"

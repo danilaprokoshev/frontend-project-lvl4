@@ -1,6 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import _ from 'lodash';
 
+const DEFAULT_CHANNEL_ID = 1;
+
 export const channelsInfoSlice = createSlice({
   name: 'channelsInfo',
   initialState: {
@@ -12,15 +14,23 @@ export const channelsInfoSlice = createSlice({
       state.channels = action.payload;
     },
     addChannel: (state, action) => {
-      state.channels.push(action.payload);
+      const channels = state.channels.concat(action.payload);
+      return {
+        ...state,
+        channels,
+      };
     },
     setCurrentChannelId: (state, action) => {
-      state.currentChannelId = action.payload;
+      const currentChannelId = action.payload;
+      return {
+        ...state,
+        currentChannelId,
+      };
+      // state.currentChannelId = action.payload;
     },
-    // TODO: сделать константу для дефолтного канала
     deleteChannel: (state, action) => {
       if (state.currentChannelId === action.payload) {
-        state.currentChannelId = 1;
+        state.currentChannelId = DEFAULT_CHANNEL_ID;
       }
       _.remove(state.channels, (ch) => ch.id === action.payload);
     },

@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef } from 'react';
 import { useFormik } from 'formik';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
   Modal,
   FormGroup,
