@@ -14,10 +14,10 @@ export const channelsInfoSlice = createSlice({
     addChannel: (state, action) => {
       state.channels.push(action.payload);
     },
-    setCurrentChannelId: (state, action) => ({
-      ...state,
-      currentChannelId: action.payload,
-    }),
+    setCurrentChannelId: (state, action) => {
+      state.currentChannelId = action.payload;
+    },
+    // TODO: сделать константу для дефолтного канала
     deleteChannel: (state, action) => {
       if (state.currentChannelId === action.payload) {
         state.currentChannelId = 1;

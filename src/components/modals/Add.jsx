@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef } from 'react';
 import { useFormik } from 'formik';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   Modal,
   FormGroup,
@@ -12,10 +12,12 @@ import {
 } from 'react-bootstrap';
 import * as yup from 'yup';
 import { useTranslation } from 'react-i18next';
+import useAuth from '../../hooks/authorization.jsx';
 import useSocket from '../../hooks/socket.jsx';
 
 const Add = ({ onHide }) => {
   const { t } = useTranslation();
+  const auth = useAuth();
   const socket = useSocket();
   const inputRef = useRef();
   useEffect(() => {
@@ -42,6 +44,7 @@ const Add = ({ onHide }) => {
     onSubmit: (values, { setSubmitting }) => {
       const channel = {
         name: values.body,
+        creator: auth.user.username,
       };
       socket.createChannel(channel);
       setSubmitting(false);

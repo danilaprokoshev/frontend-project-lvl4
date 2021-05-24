@@ -22,11 +22,11 @@ const mountNode = document.querySelector('#chat');
 ReactDOM.render(
   <Provider store={store}>
     <I18nextProvider i18n={i18n}>
-      <SocketProvider>
-        <AuthProvider>
+      <AuthProvider>
+        <SocketProvider>
           <App />
-        </AuthProvider>
-      </SocketProvider>
+        </SocketProvider>
+      </AuthProvider>
     </I18nextProvider>
   </Provider>,
   mountNode,

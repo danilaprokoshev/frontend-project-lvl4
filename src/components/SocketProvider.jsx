@@ -11,8 +11,10 @@ import {
   setCurrentChannelId,
 } from '../features/channelsInfo/channelsInfoSlice.js';
 import socketContext from '../contexts/socket.jsx';
+import useAuth from '../hooks/authorization.jsx';
 
 const SocketProvider = ({ children }) => {
+  const auth = useAuth();
   const dispatch = useDispatch();
   const socket = io();
   socket.on('newMessage', (msg) => {
@@ -20,7 +22,11 @@ const SocketProvider = ({ children }) => {
   });
   socket.on('newChannel', (channel) => {
     dispatch(addChannel(channel));
-    dispatch(setCurrentChannelId(channel.id));
+    // if (auth.user) {
+    //   if (auth.user.username === channel.creator) {
+    //     dispatch(setCurrentChannelId(channel.id));
+    //   }
+    // }
   });
   socket.on('removeChannel', ({ id }) => {
     dispatch(deleteChannel(id));
