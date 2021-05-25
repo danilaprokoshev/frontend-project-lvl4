@@ -9,10 +9,14 @@ if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
 }
 
-export default async (socketClient) => {
+const app = async (socketClient) => {
   const vdom = await init(socketClient);
-
-  ReactDOM.render(vdom, document.getElementById('chat'));
+  // ReactDOM.render(vdom, document.getElementById('chat'));
+  return vdom;
+  // ReactDOM.render(vdom, document.getElementById('chat'));
 };
+export default app;
 
-// render();
+//const vdom = await app();
+//ReactDOM.render(vdom, document.getElementById('chat'));
+// await app();
