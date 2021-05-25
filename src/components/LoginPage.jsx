@@ -41,6 +41,11 @@ const LoginPage = () => {
     },
   });
 
+  const handleLinkToSignup = (e) => {
+    e.preventDefault();
+    history.replace('/signup');
+  };
+
   return (
     <div className="container-fluid">
       <div className="row justify-content-center pt-5">
@@ -78,7 +83,7 @@ const LoginPage = () => {
             <Button type="submit" className="w-100 mb-3" variant="outline-dark">{t('login.enter')}</Button>
             <div className="d-flex flex-column align-items-center">
               <span className="small mb-2">{t('login.account_exists')}</span>
-              <a href="/signup">{t('login.ref_to_registration')}</a>
+              <a href="/signup" onClick={handleLinkToSignup}>{t('login.ref_to_registration')}</a>
             </div>
           </Form>
         </div>
