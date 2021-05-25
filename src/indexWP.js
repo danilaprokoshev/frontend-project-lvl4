@@ -1,5 +1,6 @@
 // @ts-check
 
+import ReactDOM from 'react-dom';
 import '../assets/application.scss';
 
 import init from './init.jsx';
@@ -14,4 +15,5 @@ const app = (socketClient) => {
   return vdom;
 };
 
-export default app;
+const vdom = app();
+ReactDOM.render(vdom, document.getElementById('chat'));
