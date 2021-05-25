@@ -1,6 +1,6 @@
 export default {
   translation: {
-    title: 'Hexlet-Chat',
+    title: 'Hexlet Chat',
     log_out: 'Выйти',
     login: {
       enter: 'Войти',
