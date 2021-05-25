@@ -17,5 +17,5 @@ const app = (socketClient) => {
 
 export default app;
 
-const vdom = app();
-ReactDOM.render(vdom, document.getElementById('chat'));
+// const vdom = app();
+// ReactDOM.render(vdom, document.getElementById('chat'));
