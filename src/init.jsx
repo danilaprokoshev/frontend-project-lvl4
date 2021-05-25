@@ -23,7 +23,7 @@ import {
 export default (socketClient) => {
   // const { user } = useAuth();
   // const dispatch = useDispatch();
-  const socket = socketClient();
+  const socket = socketClient;
   socket.on('newMessage', (msg) => {
     store.dispatch(addMessage(msg));
   });

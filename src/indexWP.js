@@ -10,7 +10,7 @@ if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
 }
 
-const app = (socketClient = io) => {
+const app = (socketClient = io()) => {
   const vdom = init(socketClient);
 
   return vdom;
