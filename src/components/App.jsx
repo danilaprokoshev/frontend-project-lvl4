@@ -1,6 +1,6 @@
 // @ts-check
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -48,6 +48,9 @@ const PrivateRoute = ({
 // TODO: структурировать компненты (и другие модули) и их выбор через index.js (mapping)
 // https://ru.hexlet.io/challenges/js_react_modals/instance
 const App = () => {
+  useEffect(() => {
+    console.log(window.location.href);
+  });
   const { t } = useTranslation();
   const auth = useAuth();
 
