@@ -1,6 +1,6 @@
 // @ts-check
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import { addMessage, deleteMessages } from '../features/messagesInfo/messagesInfoSlice.js';
 import {
@@ -12,7 +12,8 @@ import {
 import socketContext from '../contexts/socket.jsx';
 import useAuth from '../hooks/authorization.jsx';
 
-const SocketProvider = ({ socket, children }) => {
+const SocketProvider = ({ socketClient, children }) => {
+  const socket = socketClient();
   const { user } = useAuth();
   const dispatch = useDispatch();
   socket.on('newMessage', (msg) => {

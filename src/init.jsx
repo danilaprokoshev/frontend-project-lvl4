@@ -13,14 +13,17 @@ import SocketProvider from './components/SocketProvider.jsx';
 
 import i18n from './components/i18n.js';
 
-export default (socketClient = io()) => (
-  <Provider store={store}>
-    <I18nextProvider i18n={i18n}>
-      <AuthProvider>
-        <SocketProvider socket={socketClient}>
-          <App />
-        </SocketProvider>
-      </AuthProvider>
-    </I18nextProvider>
-  </Provider>
-);
+export default (socketClient = io) => {
+  // const socket = socketClient();
+  return (
+    <Provider store={store}>
+      <I18nextProvider i18n={i18n}>
+        <AuthProvider>
+          <SocketProvider socketClient={socketClient}>
+            <App />
+          </SocketProvider>
+        </AuthProvider>
+      </I18nextProvider>
+    </Provider>
+  );
+};
