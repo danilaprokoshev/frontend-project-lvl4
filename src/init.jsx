@@ -13,7 +13,7 @@ import SocketProvider from './components/SocketProvider.jsx';
 
 import i18n from './components/i18n.js';
 
-export default async (socketClient = io()) => (
+export default (socketClient = io()) => (
   <Provider store={store}>
     <I18nextProvider i18n={i18n}>
       <AuthProvider>
