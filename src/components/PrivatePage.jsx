@@ -24,7 +24,7 @@ const PrivatePage = () => {
     };
 
     fetchContent();
-  }, []);
+  });
 
   return (
     <div className="row flex-grow-1 h-75 pb-3">
