@@ -2,7 +2,6 @@
 
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-// import { io } from 'socket.io-client';
 import { addMessage, deleteMessages } from '../features/messagesInfo/messagesInfoSlice.js';
 import {
   addChannel,
