@@ -12,28 +12,28 @@ import {
 import socketContext from '../contexts/socket.jsx';
 import useAuth from '../hooks/authorization.jsx';
 
-const SocketProvider = ({ socketClient, children }) => {
-  const socket = socketClient();
-  const { user } = useAuth();
-  const dispatch = useDispatch();
-  socket.on('newMessage', (msg) => {
-    dispatch(addMessage(msg));
-  });
-  socket.on('newChannel', (channel) => {
-    dispatch(addChannel(channel));
-    if (user) {
-      if (user.username === channel.creator) {
-        dispatch(setCurrentChannelId(channel.id));
-      }
-    }
-  });
-  socket.on('removeChannel', ({ id }) => {
-    dispatch(deleteChannel(id));
-    dispatch(deleteMessages(id));
-  });
-  socket.on('renameChannel', (channel) => {
-    dispatch(changeNameChannel(channel));
-  });
+const SocketProvider = ({ socket, children }) => {
+  // const socket = socketClient();
+  // const { user } = useAuth();
+  // const dispatch = useDispatch();
+  // socket.on('newMessage', (msg) => {
+  //   dispatch(addMessage(msg));
+  // });
+  // socket.on('newChannel', (channel) => {
+  //   dispatch(addChannel(channel));
+  //   if (user) {
+  //     if (user.username === channel.creator) {
+  //       dispatch(setCurrentChannelId(channel.id));
+  //     }
+  //   }
+  // });
+  // socket.on('removeChannel', ({ id }) => {
+  //   dispatch(deleteChannel(id));
+  //   dispatch(deleteMessages(id));
+  // });
+  // socket.on('renameChannel', (channel) => {
+  //   dispatch(changeNameChannel(channel));
+  // });
 
   const withTimeout = (onSuccess, onTimeout, timeout) => {
     let called;
