@@ -74,12 +74,11 @@ const LoginPage = () => {
                 required
               />
               {authFailed && t('login.invalid_user')}
-              {/*<Form.Control.Feedback type="invalid">{t('login.invalid_user')}</Form.Control.Feedback>*/}
             </Form.Group>
             <Button type="submit" className="w-100 mb-3" variant="outline-dark">{t('login.enter')}</Button>
             <div className="d-flex flex-column align-items-center">
               <span className="small mb-2">{t('login.account_exists')}</span>
-              <a className="text-dark" href="/signup">{t('login.ref_to_registration')}</a>
+              <a href="/signup">{t('login.ref_to_registration')}</a>
             </div>
           </Form>
         </div>
