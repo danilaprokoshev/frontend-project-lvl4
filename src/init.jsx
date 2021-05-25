@@ -18,7 +18,7 @@ import {
   setCurrentChannelId,
 } from './features/channelsInfo/channelsInfoSlice';
 
-export default (socketClient) => {
+const init = (socketClient) => {
   const socket = socketClient;
   socket.on('newMessage', (msg) => {
     store.dispatch(addMessage(msg));
@@ -46,3 +46,5 @@ export default (socketClient) => {
     </Provider>
   );
 };
+
+export default init;
