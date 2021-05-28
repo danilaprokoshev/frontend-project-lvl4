@@ -34,11 +34,41 @@ const init = (socketClient) => {
   socket.on('renameChannel', (channel) => {
     store.dispatch(changeNameChannel(channel));
   });
+
+  const sendMessage = (msg) => {
+    socket.emit('newMessage', msg, (response) => {
+      console.log(response.status);
+    });
+  };
+
+  const createChannel = (channel) => {
+    socket.emit('newChannel', channel, (response) => {
+      console.log(response.status);
+    });
+  };
+
+  const removeChannel = (channel) => {
+    socket.emit('removeChannel', channel, (response) => {
+      console.log(response.status);
+    });
+  };
+
+  const renameChannel = (channel) => {
+    socket.emit('renameChannel', channel, (response) => {
+      console.log(response.status);
+    });
+  };
+
   return (
     <Provider store={store}>
       <I18nextProvider i18n={i18n}>
         <AuthProvider>
-          <SocketProvider socket={socket}>
+          <SocketProvider
+            sendMessage={sendMessage}
+            createChannel={createChannel}
+            removeChannel={removeChannel}
+            renameChannel={renameChannel}
+          >
             <App />
           </SocketProvider>
         </AuthProvider>
