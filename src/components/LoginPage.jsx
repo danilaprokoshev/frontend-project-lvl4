@@ -4,7 +4,7 @@ import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
 import { useFormik } from 'formik';
 import { Button, Form } from 'react-bootstrap';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import useAuth from '../hooks/authorization.jsx';
 import routes from '../routes.js';
@@ -41,10 +41,10 @@ const LoginPage = () => {
     },
   });
 
-  const handleLinkToSignup = (e) => {
-    e.preventDefault();
-    history.replace('/signup');
-  };
+  // const handleLinkToSignup = (e) => {
+  //   e.preventDefault();
+  //   history.replace('/signup');
+  // };
 
   return (
     <div className="container-fluid">
@@ -83,7 +83,7 @@ const LoginPage = () => {
             <Button type="submit" className="w-100 mb-3" variant="outline-dark">{t('login.enter')}</Button>
             <div className="d-flex flex-column align-items-center">
               <span className="small mb-2">{t('login.account_exists')}</span>
-              <a href="/signup" onClick={handleLinkToSignup}>{t('login.ref_to_registration')}</a>
+              <Link className="text-dark" to="/signup">{t('login.ref_to_registration')}</Link>
             </div>
           </Form>
         </div>
