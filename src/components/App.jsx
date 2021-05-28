@@ -16,34 +16,31 @@ import LoginPage from './LoginPage.jsx';
 import SignupPage from './SignupPage.jsx';
 import useAuth from '../hooks/authorization.jsx';
 
-const isAuthenticated = () => {
-  const userId = JSON.parse(localStorage.getItem('userId'));
-
-  return (userId && userId.token);
-};
-
 const PrivateRoute = ({
   children,
   exact,
   path,
-}) => (
-  <Route
-    exact={exact}
-    path={path}
-    render={({ location }) => (((isAuthenticated()))
-      ? (
-        children
-      )
-      : (
-        <Redirect
-          to={{
-            pathname: '/login',
-            state: { from: location },
-          }}
-        />
-      ))}
-  />
-);
+}) => {
+  const { user } = useAuth();
+  return (
+    <Route
+      exact={exact}
+      path={path}
+      render={({ location }) => ((user)
+        ? (
+          children
+        )
+        : (
+          <Redirect
+            to={{
+              pathname: '/login',
+              state: { from: location },
+            }}
+          />
+        ))}
+    />
+  );
+};
 
 // TODO: структурировать компненты (и другие модули) и их выбор через index.js (mapping)
 // https://ru.hexlet.io/challenges/js_react_modals/instance
