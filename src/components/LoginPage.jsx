@@ -78,7 +78,7 @@ const LoginPage = () => {
                 isInvalid={authFailed}
                 required
               />
-              {authFailed && t('login.invalid_user')}
+              {authFailed && <Form.Text className="text-danger">{t('login.invalid_user')}</Form.Text>}
             </Form.Group>
             <Button type="submit" className="w-100 mb-3" variant="outline-dark">{t('login.enter')}</Button>
             <div className="d-flex flex-column align-items-center">
