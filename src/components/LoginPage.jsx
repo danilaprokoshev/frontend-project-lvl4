@@ -41,11 +41,6 @@ const LoginPage = () => {
     },
   });
 
-  // const handleLinkToSignup = (e) => {
-  //   e.preventDefault();
-  //   history.replace('/signup');
-  // };
-
   return (
     <div className="container-fluid">
       <div className="row justify-content-center pt-5">
