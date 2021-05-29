@@ -25,6 +25,7 @@
   "homepage": "https://github.com/danilaprokoshev/frontend-project-lvl4#readme",
   "dependencies": {
     "@reduxjs/toolkit": "^1.5.1",
+    "@rollbar/react": "^0.8.0",
     "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
     "classnames": "^2.3.1",

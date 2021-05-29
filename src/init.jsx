@@ -3,6 +3,7 @@
 import 'core-js/stable/index.js';
 import 'regenerator-runtime/runtime.js';
 import React from 'react';
+import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
 import { Provider } from 'react-redux';
 import { I18nextProvider } from 'react-i18next';
 import store from './store.js';
@@ -17,9 +18,18 @@ import {
   setCurrentChannelId,
 } from './features/channelsInfo/channelsInfoSlice';
 
+const POST_CLIENT_ITEM_ACCESS_TOKEN = '3561b28aed6e4e099120d80a0615a15e';
+
 const init = async (socketClient) => {
+  const rollbarConfig = {
+    accessToken: POST_CLIENT_ITEM_ACCESS_TOKEN,
+    captureUncaught: true,
+    captureUnhandledRejections: true,
+    payload: {
+      environment: 'production',
+    },
+  };
   const i18nInstance = await getI18nInstance();
-  console.log(i18nInstance);
   const socket = socketClient;
   socket.on('newMessage', (msg) => {
     store.dispatch(addMessage(msg));
@@ -61,20 +71,24 @@ const init = async (socketClient) => {
   };
 
   return (
-    <Provider store={store}>
-      <I18nextProvider i18n={i18nInstance}>
-        <AuthProvider>
-          <SocketProvider
-            sendMessage={sendMessage}
-            createChannel={createChannel}
-            removeChannel={removeChannel}
-            renameChannel={renameChannel}
-          >
-            <App />
-          </SocketProvider>
-        </AuthProvider>
-      </I18nextProvider>
-    </Provider>
+    <RollbarProvider config={rollbarConfig}>
+      <ErrorBoundary>
+        <Provider store={store}>
+          <I18nextProvider i18n={i18nInstance}>
+            <AuthProvider>
+              <SocketProvider
+                sendMessage={sendMessage}
+                createChannel={createChannel}
+                removeChannel={removeChannel}
+                renameChannel={renameChannel}
+              >
+                <App />
+              </SocketProvider>
+            </AuthProvider>
+          </I18nextProvider>
+        </Provider>
+      </ErrorBoundary>
+    </RollbarProvider>
   );
 };
 
