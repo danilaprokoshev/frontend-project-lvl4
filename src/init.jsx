@@ -9,8 +9,7 @@ import store from './store.js';
 import App from './components/App.jsx';
 import AuthProvider from './components/AuthProvider.jsx';
 import SocketProvider from './components/SocketProvider.jsx';
-
-import i18n from './components/i18n.js';
+import getI18nInstance from './lib/i18n.js';
 import { addMessage, deleteMessages } from './features/messagesInfo/messagesInfoSlice';
 import {
   addChannel, changeNameChannel,
@@ -18,7 +17,9 @@ import {
   setCurrentChannelId,
 } from './features/channelsInfo/channelsInfoSlice';
 
-const init = (socketClient) => {
+const init = async (socketClient) => {
+  const i18nInstance = await getI18nInstance();
+  console.log(i18nInstance);
   const socket = socketClient;
   socket.on('newMessage', (msg) => {
     store.dispatch(addMessage(msg));
@@ -61,7 +62,7 @@ const init = (socketClient) => {
 
   return (
     <Provider store={store}>
-      <I18nextProvider i18n={i18n}>
+      <I18nextProvider i18n={i18nInstance}>
         <AuthProvider>
           <SocketProvider
             sendMessage={sendMessage}

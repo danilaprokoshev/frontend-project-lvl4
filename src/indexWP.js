@@ -10,11 +10,9 @@ if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
 }
 
-const app = (socketClient = io()) => {
-  const vdom = init(socketClient);
-
-  return vdom;
+const app = async (socketClient = io()) => {
+  const virtualDom = await init(socketClient);
+  ReactDOM.render(virtualDom, document.getElementById('chat'));
 };
 
-const vdom = app();
-ReactDOM.render(vdom, document.getElementById('chat'));
+app();
