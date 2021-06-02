@@ -7,7 +7,8 @@ import cn from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { setCurrentChannelId } from '../../features/channelsInfo/channelsInfoSlice.js';
 import { openModal, hideModal } from '../../features/modal/modalSlice.js';
-import getModal from '../modals/index.js';
+// import getModal from '../modals/index.js';
+import Modal from '../modals/CustomModal.jsx';
 
 const Channels = () => {
   const { t } = useTranslation();
@@ -91,14 +92,14 @@ const Channels = () => {
     dispatch(hideModal());
   };
 
-  const renderModal = ({ isOpened, type }) => {
-    if (!isOpened) {
-      return null;
-    }
-
-    const Component = getModal(type);
-    return <Component onHide={handleHideModal} />;
-  };
+  // const renderModal = ({ isOpened, type }) => {
+  //   if (!isOpened) {
+  //     return null;
+  //   }
+  //
+  //   const Component = getModal(type);
+  //   return <Component onHide={handleHideModal} />;
+  // };
 
   return (
     <>
@@ -109,7 +110,8 @@ const Channels = () => {
       <ul className="nav flex-column nav-pills nav-fill">
         {channels.length > 0 && channels.map(renderChannelTitle)}
       </ul>
-      {renderModal(modal)}
+      <Modal modal={modal} onHide={handleHideModal} />
+      {/* renderModal(modal)} */}
     </>
   );
 };
