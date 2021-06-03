@@ -154,7 +154,7 @@ const CustomModal = ({ modal, onHide }) => {
       onHide();
     },
   };
-  const getFormik = ({
+  const GetFormik = ({
     type,
     extra,
   }) => {
@@ -181,7 +181,7 @@ const CustomModal = ({ modal, onHide }) => {
     }
     return formik;
   };
-  const formik = getFormik(modal);
+  const formik = GetFormik(modal);
   // if (!modal.type) {
   //   return null;
   // }
