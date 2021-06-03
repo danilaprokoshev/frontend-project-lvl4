@@ -16,7 +16,7 @@ import useAuth from '../../hooks/authorization.jsx';
 import useSocket from '../../hooks/socket.jsx';
 
 const renderSettingsByType = {
-  adding: ({ isOpened }, onHide, t, formik, inputRef) => (
+  adding: (isOpened, onHide, t, formik, inputRef) => (
     <Modal show={isOpened} onHide={onHide}>
       <Modal.Header closeButton>
         <Modal.Title>{t('modals.adding.title')}</Modal.Title>
@@ -53,7 +53,7 @@ const renderSettingsByType = {
       </Modal.Body>
     </Modal>
   ),
-  renaming: ({ isOpened }, onHide, t, formik, inputRef) => (
+  renaming: (isOpened, onHide, t, formik, inputRef) => (
     <Modal show={isOpened} onHide={onHide}>
       <Modal.Header closeButton>
         <Modal.Title>{t('modals.renaming.title')}</Modal.Title>
@@ -90,7 +90,7 @@ const renderSettingsByType = {
       </Modal.Body>
     </Modal>
   ),
-  removing: ({ isOpened }, onHide, t, formik) => (
+  removing: (isOpened, onHide, t, handleRemoveChannel) => (
     <Modal show={isOpened} onHide={onHide}>
       <Modal.Header closeButton>
         <Modal.Title>{t('modals.removing.title')}</Modal.Title>
@@ -102,7 +102,7 @@ const renderSettingsByType = {
           <Button className="mr-2 btn btn-secondary" onClick={onHide}>
             {t('modals.removing.cancel')}
           </Button>
-          <Button variant="danger" onClick={formik.handleSubmit}>
+          <Button variant="danger" onClick={handleRemoveChannel}>
             {t('modals.removing.remove')}
           </Button>
         </div>
@@ -115,13 +115,23 @@ const CustomModal = ({ modal, onHide }) => {
   if (!modal.type) {
     return null;
   }
+  const inputRef = useRef();
+  useEffect(() => {
+    switch (modal.type) {
+      case 'adding':
+        inputRef.current.focus();
+        break;
+      case 'renaming':
+        inputRef.current.select();
+        break;
+      default:
+        break;
+    }
+  }, []);
   const { t } = useTranslation();
   const auth = useAuth();
   const socket = useSocket();
-  const inputRef = useRef();
-  // useEffect(() => {
-  //   inputRef.current.focus();
-  // }, []);
+
   const channelsNames = useSelector((state) => state
     .channelsInfo
     .channels
@@ -155,25 +165,33 @@ const CustomModal = ({ modal, onHide }) => {
   const getFormik = ({
     type,
     extra,
-  }) => useFormik({
-    initialValues: {
-      body: extra ? extra.name : '',
-    },
-    validationSchema: yup.object({
-      body: yup.string()
-        .required(t('form_errors.required'))
-        .min(3, t('form_errors.required_length'))
-        .max(20, t('form_errors.required_length'))
-        .notOneOf(channelsNames, t('form_errors.unique_item')),
-    }),
-    validateOnBlur: false,
-    validateOnChange: false,
-    onSubmit: SubmitSettingsByType[type],
-  });
+  }) => {
+    if (type === 'removing') {
+      return () => {
+        socket.removeChannel(channel);
+        onHide();
+      };
+    }
+    return useFormik({
+      initialValues: {
+        body: extra ? extra.name : '',
+      },
+      validationSchema: yup.object({
+        body: yup.string()
+          .required(t('form_errors.required'))
+          .min(3, t('form_errors.required_length'))
+          .max(20, t('form_errors.required_length'))
+          .notOneOf(channelsNames, t('form_errors.unique_item')),
+      }),
+      validateOnBlur: false,
+      validateOnChange: false,
+      onSubmit: SubmitSettingsByType[type],
+    });
+  };
   const formik = getFormik(modal);
   const render = renderSettingsByType[modal.type];
 
-  return render(modal, onHide, t, formik, inputRef);
+  return render(modal.isOpened, onHide, t, formik, inputRef);
 };
 
 export default CustomModal;
