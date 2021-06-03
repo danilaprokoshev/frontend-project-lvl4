@@ -182,12 +182,11 @@ const CustomModal = ({ modal, onHide }) => {
     return formik;
   };
   const formik = GetFormik(modal);
-  // if (!modal.type) {
-  //   return null;
-  // }
   const render = renderSettingsByType[modal.type] ?? (() => null);
 
   return render(modal.isOpened, onHide, t, formik, inputRef);
 };
+
+CustomModal.displayName = 'CustomModal';
 
 export default CustomModal;
