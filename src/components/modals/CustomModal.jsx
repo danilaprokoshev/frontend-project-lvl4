@@ -18,7 +18,6 @@ import useSocket from '../../hooks/socket.jsx';
 const CustomModal = ({ modal, onHide }) => {
   const renderSettingsByType = {
     adding: (isOpened, onHideHandler, t, formik, inputRef) => {
-      CustomModal.displayName = 'CustomModal';
       return (
         <Modal show={isOpened} onHide={onHideHandler}>
           <Modal.Header closeButton>
@@ -58,7 +57,6 @@ const CustomModal = ({ modal, onHide }) => {
       );
     },
     renaming: (isOpened, onHideHandler, t, formik, inputRef) => {
-      CustomModal.displayName = 'CustomModal';
       return (
         <Modal show={isOpened} onHide={onHideHandler}>
           <Modal.Header closeButton>
@@ -98,7 +96,6 @@ const CustomModal = ({ modal, onHide }) => {
       );
     },
     removing: (isOpened, onHideHandler, t, handleRemoveChannel) => {
-      CustomModal.displayName = 'CustomModal';
       return (
         <Modal show={isOpened} onHide={onHideHandler}>
           <Modal.Header closeButton>
@@ -192,7 +189,7 @@ const CustomModal = ({ modal, onHide }) => {
   };
   const formik = GetFormik(modal);
   const render = renderSettingsByType[modal.type] ?? (() => null);
-
+  CustomModal.displayName = 'CustomModal';
   return render(modal.isOpened, onHide, t, formik, inputRef);
 };
 
