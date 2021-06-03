@@ -16,9 +16,6 @@ import useAuth from '../../hooks/authorization.jsx';
 import useSocket from '../../hooks/socket.jsx';
 
 const CustomModal = ({ modal, onHide }) => {
-  if (!modal.type) {
-    return null;
-  }
   const renderSettingsByType = {
     adding: (isOpened, onHideHandler, t, formik, inputRef) => (
       <Modal show={isOpened} onHide={onHideHandler}>
@@ -126,7 +123,7 @@ const CustomModal = ({ modal, onHide }) => {
       default:
         break;
     }
-  }, []);
+  }, [modal.type]);
   const { t } = useTranslation();
   const auth = useAuth();
   const socket = useSocket();
@@ -156,22 +153,12 @@ const CustomModal = ({ modal, onHide }) => {
       setSubmitting(false);
       onHide();
     },
-    removing: () => {
-      socket.removeChannel(channel);
-      onHide();
-    },
   };
   const getFormik = ({
     type,
     extra,
   }) => {
-    if (type === 'removing') {
-      return () => {
-        socket.removeChannel(channel);
-        onHide();
-      };
-    }
-    return useFormik({
+    const formik = useFormik({
       initialValues: {
         body: extra ? extra.name : '',
       },
@@ -186,9 +173,19 @@ const CustomModal = ({ modal, onHide }) => {
       validateOnChange: false,
       onSubmit: SubmitSettingsByType[type],
     });
+    if (type === 'removing') {
+      return () => {
+        socket.removeChannel(channel);
+        onHide();
+      };
+    }
+    return formik;
   };
   const formik = getFormik(modal);
-  const render = renderSettingsByType[modal.type];
+  // if (!modal.type) {
+  //   return null;
+  // }
+  const render = renderSettingsByType[modal.type] ?? (() => null);
 
   return render(modal.isOpened, onHide, t, formik, inputRef);
 };
