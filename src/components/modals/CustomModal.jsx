@@ -16,7 +16,6 @@ import useAuth from '../../hooks/authorization.jsx';
 import useSocket from '../../hooks/socket.jsx';
 
 const CustomModal = ({ modal, onHide }) => {
-  CustomModal.displayName = 'CustomModal';
   const renderSettingsByType = {
     adding: (isOpened, onHideHandler, t, formik, inputRef) => (
       <Modal show={isOpened} onHide={onHideHandler}>
@@ -188,6 +187,6 @@ const CustomModal = ({ modal, onHide }) => {
   return render(modal.isOpened, onHide, t, formik, inputRef);
 };
 
-// CustomModal.displayName = 'CustomModal';
+CustomModal.displayName = 'CustomModal';
 
 export default CustomModal;
