@@ -7,8 +7,7 @@ import cn from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { setCurrentChannelId } from '../../features/channelsInfo/channelsInfoSlice.js';
 import { openModal, hideModal } from '../../features/modal/modalSlice.js';
-// import getModal from '../modals/index.js';
-import CustomModal from '../modals/CustomModal.jsx';
+import CustomModal from '../CustomModal.jsx';
 
 const Channels = () => {
   const { t } = useTranslation();
@@ -91,15 +90,6 @@ const Channels = () => {
   const handleHideModal = () => {
     dispatch(hideModal());
   };
-
-  // const renderModal = ({ isOpened, type }) => {
-  //   if (!isOpened) {
-  //     return null;
-  //   }
-  //
-  //   const Component = getModal(type);
-  //   return <Component onHide={handleHideModal} />;
-  // };
 
   return (
     <>

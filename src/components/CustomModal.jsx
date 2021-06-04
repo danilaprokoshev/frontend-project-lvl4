@@ -12,8 +12,8 @@ import {
 } from 'react-bootstrap';
 import * as yup from 'yup';
 import { useTranslation } from 'react-i18next';
-import useAuth from '../../hooks/authorization.jsx';
-import useSocket from '../../hooks/socket.jsx';
+import useAuth from '../hooks/authorization.jsx';
+import useSocket from '../hooks/socket.jsx';
 
 const renderSettingsByType = {
   adding: function adding(isOpened, onHideHandler, t, formik, inputRef) {
