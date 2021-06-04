@@ -12,7 +12,6 @@ import useAuth from '../../hooks/authorization.jsx';
 const Chat = () => {
   const { t } = useTranslation();
   const auth = useAuth();
-  // TODO: вынести селекторы в отдельный модуль, и переиспользовать каждый раз
   const currentChannelId = useSelector((state) => state.channelsInfo.currentChannelId);
   const inputRef = useRef();
   const socket = useSocket();
@@ -44,7 +43,6 @@ const Chat = () => {
   const messages = messagesChat
     .filter(({ channelId }) => channelId === currentChannelId)
     .map((msg) => [msg.body, msg.id, msg.username]);
-  // TODO: добавить скроллинг вниз, когда сообщений много
   const renderMessage = ([body, id, username]) => (
     <div key={id} className="text-break">
       <b>{username}</b>

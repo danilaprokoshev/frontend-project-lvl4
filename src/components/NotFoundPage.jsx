@@ -13,7 +13,6 @@ const NotFoundPage = () => {
         <h3>{t('not_found.not_found_page')}</h3>
         <hr />
         <Link className="text-dark" to="/">{t('not_found.link_to_main')}</Link>
-        {/* TODO: реализовать подгрузку картинки об ошибке 404 */}
       </p>
     </div>
   );

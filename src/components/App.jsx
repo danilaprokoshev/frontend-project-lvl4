@@ -42,8 +42,6 @@ const PrivateRoute = ({
   );
 };
 
-// TODO: структурировать компненты (и другие модули) и их выбор через index.js (mapping)
-// https://ru.hexlet.io/challenges/js_react_modals/instance
 const App = () => {
   const { t } = useTranslation();
   const auth = useAuth();
