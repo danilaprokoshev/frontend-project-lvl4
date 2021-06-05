@@ -1,9 +1,10 @@
 // @ts-check
 
 import axios from 'axios';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { Spinner } from 'react-bootstrap';
 import { addChannels, setCurrentChannelId } from '../features/channelsInfo/channelsInfoSlice.js';
 import { addMessages } from '../features/messagesInfo/messagesInfoSlice.js';
 import routes from '../routes.js';
@@ -15,6 +16,7 @@ const PrivatePage = () => {
   const auth = useAuth();
   const history = useHistory();
   const dispatch = useDispatch();
+  const [isLoading, setLoading] = useState(true);
   useEffect(() => {
     const fetchContent = async () => {
       try {
@@ -29,6 +31,7 @@ const PrivatePage = () => {
         dispatch(addChannels(channels));
         dispatch(addMessages(messages));
         dispatch(setCurrentChannelId(currentChannelId));
+        setLoading(false);
       } catch (err) {
         if (err.isAxiosError && err.response.status === 401) {
           history.replace('/login');
@@ -40,14 +43,26 @@ const PrivatePage = () => {
   });
 
   return (
-    <div className="row flex-grow-1 h-75 pb-3">
-      <div className="col-3 border-right">
-        <Channels />
-      </div>
-      <div className="col h-100">
-        <Chat />
-      </div>
-    </div>
+    <>
+      {isLoading
+        ? (
+          <div className="h-100 d-flex justify-content-center align-items-center">
+            <Spinner animation="border" role="status">
+              <span className="sr-only">Loading...</span>
+            </Spinner>
+          </div>
+        )
+        : (
+          <div className="row flex-grow-1 h-75 pb-3">
+            <div className="col-3 border-right">
+              <Channels />
+            </div>
+            <div className="col h-100">
+              <Chat />
+            </div>
+          </div>
+        )}
+    </>
   );
 };
 
