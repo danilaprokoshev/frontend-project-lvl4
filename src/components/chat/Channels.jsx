@@ -14,7 +14,6 @@ const Channels = () => {
   const dispatch = useDispatch();
   const channels = useSelector((state) => state.channelsInfo.channels);
   const currentChannelId = useSelector((state) => state.channelsInfo.currentChannelId);
-  const modal = useSelector((state) => state.modal);
 
   const handleSelectChannel = (id) => (e) => {
     e.target.blur();
@@ -100,7 +99,7 @@ const Channels = () => {
       <ul className="nav flex-column nav-pills nav-fill">
         {channels.length > 0 && channels.map(renderChannelTitle)}
       </ul>
-      <CustomModal modal={modal} onHide={handleHideModal} />
+      <CustomModal onHide={handleHideModal} />
     </>
   );
 };

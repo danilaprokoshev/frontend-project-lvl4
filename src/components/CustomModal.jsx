@@ -123,7 +123,8 @@ const renderSettingsByType = {
   },
 };
 
-const CustomModal = ({ modal, onHide }) => {
+const CustomModal = ({ onHide }) => {
+  const modal = useSelector((state) => state.modal);
   const inputRef = useRef();
   useEffect(() => {
     switch (modal.type) {
@@ -136,7 +137,7 @@ const CustomModal = ({ modal, onHide }) => {
       default:
         break;
     }
-  }, [modal.type]);
+  }, [modal]);
   const { t } = useTranslation();
   const auth = useAuth();
   const socket = useSocket();
@@ -183,6 +184,8 @@ const CustomModal = ({ modal, onHide }) => {
       }),
       validateOnBlur: false,
       validateOnChange: false,
+      enableReinitialize: true,
+      dirty: false,
       onSubmit: SubmitSettingsByType[type],
     });
     if (type === 'removing') {
