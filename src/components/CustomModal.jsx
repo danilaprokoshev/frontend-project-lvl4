@@ -129,15 +129,17 @@ const CustomModal = ({ onHide }) => {
   useEffect(() => {
     switch (modal.type) {
       case 'adding':
+        inputRef.current.value = '';
         inputRef.current.focus();
         break;
       case 'renaming':
+        inputRef.current.value = modal.extra.name;
         inputRef.current.select();
         break;
       default:
         break;
     }
-  }, [modal]);
+  }, [modal.type]);
   const { t } = useTranslation();
   const auth = useAuth();
   const socket = useSocket();
@@ -169,11 +171,10 @@ const CustomModal = ({ onHide }) => {
   };
   const GetFormHandler = ({
     type,
-    extra,
   }) => {
     const formik = useFormik({
       initialValues: {
-        body: extra ? extra.name : '',
+        body: '',
       },
       validationSchema: yup.object({
         body: yup.string()
@@ -184,8 +185,6 @@ const CustomModal = ({ onHide }) => {
       }),
       validateOnBlur: false,
       validateOnChange: false,
-      enableReinitialize: true,
-      dirty: false,
       onSubmit: SubmitSettingsByType[type],
     });
     if (type === 'removing') {
