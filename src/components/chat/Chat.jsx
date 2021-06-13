@@ -1,6 +1,6 @@
 // @ts-check
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useFormik } from 'formik';
 import { Button, Form, InputGroup } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
@@ -15,6 +15,7 @@ const Chat = () => {
   const currentChannelId = useSelector((state) => state.channelsInfo.currentChannelId);
   const inputRef = useRef();
   const socket = useSocket();
+  const [isSubmitting, setSubmitting] = useState(false);
   useEffect(() => {
     inputRef.current.focus();
   }, [currentChannelId]);
@@ -27,15 +28,17 @@ const Chat = () => {
         .required(t('form_errors.required')),
     }),
     validateOnBlur: false,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
+      setSubmitting(true);
       const { username } = auth.user;
       const msg = {
         ...values,
         username,
         channelId: currentChannelId,
       };
-      socket.sendMessage(msg);
+      await socket.sendMessage(msg);
       formik.resetForm();
+      setSubmitting(false);
     },
   });
 
@@ -70,7 +73,7 @@ const Chat = () => {
                 ref={inputRef}
               />
               <InputGroup.Append>
-                <Button type="submit" variant="dark">{t('chat.send')}</Button>
+                <Button type="submit" disabled={isSubmitting} variant="dark">{t('chat.send')}</Button>
               </InputGroup.Append>
               <Form.Control.Feedback type="invalid">{formik.errors.body}</Form.Control.Feedback>
             </InputGroup>

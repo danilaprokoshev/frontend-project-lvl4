@@ -1,6 +1,6 @@
 // @ts-check
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useFormik } from 'formik';
 import { useSelector } from 'react-redux';
 import {
@@ -16,7 +16,7 @@ import useAuth from '../hooks/authorization.jsx';
 import useSocket from '../hooks/socket.jsx';
 
 const renderSettingsByType = {
-  adding: function adding(isOpened, onHideHandler, t, formik, inputRef) {
+  adding: function adding(isOpened, onHideHandler, t, formik, inputRef, isSubmitting) {
     return (
       <>
         <Modal show={isOpened} onHide={onHideHandler}>
@@ -47,7 +47,7 @@ const renderSettingsByType = {
                 <Button className="mr-2 btn btn-secondary" onClick={onHideHandler}>
                   {t('modals.adding.cancel')}
                 </Button>
-                <Button type="submit" variant="dark">
+                <Button type="submit" disabled={isSubmitting} variant="dark">
                   {t('modals.adding.send')}
                 </Button>
               </div>
@@ -57,7 +57,7 @@ const renderSettingsByType = {
       </>
     );
   },
-  renaming: function renaming(isOpened, onHideHandler, t, formik, inputRef) {
+  renaming: function renaming(isOpened, onHideHandler, t, formik, inputRef, isSubmitting) {
     return (
       <>
         <Modal show={isOpened} onHide={onHideHandler}>
@@ -88,7 +88,7 @@ const renderSettingsByType = {
                 <Button className="mr-2 btn btn-secondary" onClick={onHideHandler}>
                   {t('modals.renaming.cancel')}
                 </Button>
-                <Button type="submit" variant="dark">
+                <Button type="submit" disabled={isSubmitting} variant="dark">
                   {t('modals.renaming.send')}
                 </Button>
               </div>
@@ -98,7 +98,7 @@ const renderSettingsByType = {
       </>
     );
   },
-  removing: function removing(isOpened, onHideHandler, t, handleRemoveChannel) {
+  removing: function removing(isOpened, onHideHandler, t, handleRemoveChannel, isSubmitting) {
     return (
       <>
         <Modal show={isOpened} onHide={onHideHandler}>
@@ -112,7 +112,7 @@ const renderSettingsByType = {
               <Button className="mr-2 btn btn-secondary" onClick={onHideHandler}>
                 {t('modals.removing.cancel')}
               </Button>
-              <Button variant="danger" onClick={handleRemoveChannel}>
+              <Button variant="danger" disabled={isSubmitting} onClick={handleRemoveChannel}>
                 {t('modals.removing.remove')}
               </Button>
             </div>
@@ -148,23 +148,26 @@ const CustomModal = ({ onHide }) => {
     .channels
     .map((ch) => ch.name));
   const channel = modal.extra;
+  const [isSubmitting, setSubmitting] = useState(false);
   const SubmitSettingsByType = {
-    adding: (values, { setSubmitting }) => {
+    adding: async (values) => {
+      setSubmitting(true);
       const newChannel = {
         name: values.body,
         creator: auth.user.username,
       };
-      socket.createChannel(newChannel);
+      await socket.createChannel(newChannel);
       setSubmitting(false);
       onHide();
     },
-    renaming: (values, { setSubmitting }) => {
+    renaming: async (values) => {
+      setSubmitting(true);
       const { id } = channel;
       const renamedChannel = {
         id,
         name: values.body,
       };
-      socket.renameChannel(renamedChannel);
+      await socket.renameChannel(renamedChannel);
       setSubmitting(false);
       onHide();
     },
@@ -188,8 +191,10 @@ const CustomModal = ({ onHide }) => {
       onSubmit: SubmitSettingsByType[type],
     });
     if (type === 'removing') {
-      return () => {
-        socket.removeChannel(channel);
+      return async () => {
+        setSubmitting(true);
+        await socket.removeChannel(channel);
+        setSubmitting(false);
         onHide();
       };
     }
@@ -198,7 +203,7 @@ const CustomModal = ({ onHide }) => {
   const formHandler = GetFormHandler(modal);
   const render = renderSettingsByType[modal.type] ?? (() => null);
 
-  return render(modal.isOpened, onHide, t, formHandler, inputRef);
+  return render(modal.isOpened, onHide, t, formHandler, inputRef, isSubmitting);
 };
 
 export default CustomModal;

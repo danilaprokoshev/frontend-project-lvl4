@@ -13,6 +13,7 @@ const LoginPage = () => {
   const { t } = useTranslation();
   const auth = useAuth();
   const [authFailed, setAuthFailed] = useState(false);
+  const [isSubmitting, setSubmitting] = useState(false);
   const inputRef = useRef();
   const history = useHistory();
   useEffect(() => {
@@ -25,6 +26,7 @@ const LoginPage = () => {
       password: '',
     },
     onSubmit: async (values) => {
+      setSubmitting(true);
       setAuthFailed(false);
       try {
         const res = await axios.post(routes.loginPath(), values);
@@ -38,6 +40,7 @@ const LoginPage = () => {
         }
         throw err;
       }
+      setSubmitting(true);
     },
   });
 
@@ -75,7 +78,7 @@ const LoginPage = () => {
               />
               {authFailed && <Form.Text className="text-danger">{t('login.invalid_user')}</Form.Text>}
             </Form.Group>
-            <Button type="submit" className="w-100 mb-3" variant="outline-dark">{t('login.enter')}</Button>
+            <Button type="submit" className="w-100 mb-3" disabled={isSubmitting} variant="outline-dark">{t('login.enter')}</Button>
             <div className="d-flex flex-column align-items-center">
               <span className="small mb-2">{t('login.account_exists')}</span>
               <Link className="text-dark" to="/signup">{t('login.ref_to_registration')}</Link>

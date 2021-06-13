@@ -13,6 +13,7 @@ import routes from '../routes.js';
 const SignupPage = () => {
   const { t } = useTranslation();
   const [signupFailed, setSignupFailed] = useState(false);
+  const [isSubmitting, setSubmitting] = useState(false);
   const auth = useAuth();
   const history = useHistory();
   const inputRef = useRef();
@@ -39,6 +40,7 @@ const SignupPage = () => {
         .oneOf([yup.ref('password'), null], t('form_errors.password_equals')),
     }),
     onSubmit: async ({ username, password }) => {
+      setSubmitting(true);
       try {
         const res = await axios.post(routes.signupPath(), { username, password });
         auth.logIn(res.data);
@@ -51,6 +53,7 @@ const SignupPage = () => {
         }
         throw err;
       }
+      setSubmitting(false);
     },
   });
   return (
@@ -134,7 +137,7 @@ const SignupPage = () => {
                 </Form.Control.Feedback>
               )}
             </Form.Group>
-            <Button type="submit" className="w-100 mb-3" variant="outline-dark">{t('signup.sign_up')}</Button>
+            <Button type="submit" className="w-100 mb-3" disabled={isSubmitting} variant="outline-dark">{t('signup.sign_up')}</Button>
           </Form>
         </div>
       </div>
