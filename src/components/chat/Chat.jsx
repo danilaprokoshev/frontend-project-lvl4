@@ -9,6 +9,8 @@ import { useTranslation } from 'react-i18next';
 import useSocket from '../../hooks/socket.jsx';
 import useAuth from '../../hooks/authorization.jsx';
 
+
+
 const Chat = () => {
   const { t } = useTranslation();
   const auth = useAuth();
@@ -17,9 +19,7 @@ const Chat = () => {
   const socket = useSocket();
   const [isSubmitting, setSubmitting] = useState(false);
   const bottomRef = useRef();
-  const scrollToBottom = (bottom) => {
-    bottom.current.scrollIntoView();
-  };
+  const messagesBox = useRef();
   const messagesChat = useSelector((state) => state.messagesInfo.messages);
   const messages = messagesChat
     .filter(({ channelId }) => channelId === currentChannelId)
@@ -33,11 +33,8 @@ const Chat = () => {
   );
 
   useEffect(() => {
-    scrollToBottom(bottomRef);
+    messagesBox.current.scrollTo({ behavior: 'smooth', top: bottomRef.current.offsetTop });
   }, [messages, currentChannelId]);
-  useEffect(() => {
-    scrollToBottom(bottomRef);
-  }, []);
   useEffect(() => {
     inputRef.current.focus();
   }, [currentChannelId]);
@@ -68,9 +65,9 @@ const Chat = () => {
   return (
     <>
       <div className="d-flex flex-column h-100">
-        <div id="messages-box" className="chat-messages overflow-auto mb-3">
+        <div ref={messagesBox} id="messages-box" className="chat-messages overflow-auto mb-3">
           {messagesChat.length > 0 && messages.map(renderMessage)}
-          <div ref={bottomRef} className="list-bottom" />
+          <div ref={bottomRef} className="messages-bottom" />
         </div>
         <div className="border-top mt-auto py-3 px-5">
           <Form noValidate onSubmit={formik.handleSubmit}>
