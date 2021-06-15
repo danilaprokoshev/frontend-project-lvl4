@@ -36,6 +36,9 @@ const Chat = () => {
     scrollToBottom();
   }, [messages, currentChannelId]);
   useEffect(() => {
+    scrollToBottom();
+  }, []);
+  useEffect(() => {
     inputRef.current.focus();
   }, [currentChannelId]);
 
