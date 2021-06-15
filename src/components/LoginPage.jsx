@@ -65,7 +65,7 @@ const LoginPage = () => {
               />
             </Form.Group>
             <Form.Group>
-              <Form.Label htmlFor="password">{t('login.password_nick')}</Form.Label>
+              <Form.Label htmlFor="current-password">{t('login.password_nick')}</Form.Label>
               <Form.Control
                 type="password"
                 onChange={formik.handleChange}

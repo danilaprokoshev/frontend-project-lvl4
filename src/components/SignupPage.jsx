@@ -85,7 +85,7 @@ const SignupPage = () => {
               ) : null}
             </Form.Group>
             <Form.Group>
-              <Form.Label htmlFor="password">{t('signup.password_label')}</Form.Label>
+              <Form.Label htmlFor="new-password">{t('signup.password_label')}</Form.Label>
               <Form.Control
                 type="password"
                 onChange={formik.handleChange}
