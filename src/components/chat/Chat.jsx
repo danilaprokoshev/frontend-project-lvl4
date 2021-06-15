@@ -31,7 +31,7 @@ const Chat = () => {
   );
 
   useEffect(() => {
-    messagesBox.current?.scrollTo({ behavior: 'smooth', top: bottomRef.current.offsetTop });
+    messagesBox?.current?.scrollTo({ behavior: 'smooth', top: bottomRef.current.offsetTop });
   }, [messages, currentChannelId]);
   useEffect(() => {
     inputRef.current.focus();
