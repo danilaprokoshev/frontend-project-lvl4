@@ -17,8 +17,8 @@ const Chat = () => {
   const socket = useSocket();
   const [isSubmitting, setSubmitting] = useState(false);
   const bottomRef = useRef();
-  const scrollToBottom = () => {
-    bottomRef.current.scrollIntoView();
+  const scrollToBottom = (bottom) => {
+    bottom.current.scrollIntoView();
   };
   const messagesChat = useSelector((state) => state.messagesInfo.messages);
   const messages = messagesChat
@@ -33,10 +33,10 @@ const Chat = () => {
   );
 
   useEffect(() => {
-    scrollToBottom();
+    scrollToBottom(bottomRef);
   }, [messages, currentChannelId]);
   useEffect(() => {
-    scrollToBottom();
+    scrollToBottom(bottomRef);
   }, []);
   useEffect(() => {
     inputRef.current.focus();
