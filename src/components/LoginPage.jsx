@@ -52,12 +52,13 @@ const LoginPage = () => {
             <Form.Group>
               <Form.Label htmlFor="username">{t('login.nick_label')}</Form.Label>
               <Form.Control
+                type="username"
                 onChange={formik.handleChange}
                 value={formik.values.username}
                 placeholder={t('login.nick_placeholder')}
                 name="username"
                 id="username"
-                autoComplete="username"
+                autocomplete="username"
                 isInvalid={authFailed}
                 required
                 ref={inputRef}
@@ -71,8 +72,8 @@ const LoginPage = () => {
                 value={formik.values.password}
                 placeholder={t('login.password_placeholder')}
                 name="password"
-                id="password"
-                autoComplete="current-password"
+                id="current-password"
+                autocomplete="current-password"
                 isInvalid={authFailed}
                 required
               />

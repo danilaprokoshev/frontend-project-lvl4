@@ -16,9 +16,29 @@ const Chat = () => {
   const inputRef = useRef();
   const socket = useSocket();
   const [isSubmitting, setSubmitting] = useState(false);
+  const bottomRef = useRef();
+  const scrollToBottom = () => {
+    bottomRef.current.scrollIntoView();
+  };
+  const messagesChat = useSelector((state) => state.messagesInfo.messages);
+  const messages = messagesChat
+    .filter(({ channelId }) => channelId === currentChannelId)
+    .map((msg) => [msg.body, msg.id, msg.username]);
+  const renderMessage = ([body, id, username]) => (
+    <div key={id} className="text-break">
+      <b>{username}</b>
+      :&nbsp;
+      {body}
+    </div>
+  );
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages, currentChannelId]);
   useEffect(() => {
     inputRef.current.focus();
   }, [currentChannelId]);
+
   const formik = useFormik({
     initialValues: {
       body: '',
@@ -42,30 +62,20 @@ const Chat = () => {
     },
   });
 
-  const messagesChat = useSelector((state) => state.messagesInfo.messages);
-  const messages = messagesChat
-    .filter(({ channelId }) => channelId === currentChannelId)
-    .map((msg) => [msg.body, msg.id, msg.username]);
-  const renderMessage = ([body, id, username]) => (
-    <div key={id} className="text-break">
-      <b>{username}</b>
-      :&nbsp;
-      {body}
-    </div>
-  );
-
   return (
     <>
       <div className="d-flex flex-column h-100">
         <div id="messages-box" className="chat-messages overflow-auto mb-3">
           {messagesChat.length > 0 && messages.map(renderMessage)}
+          <div ref={bottomRef} className="list-bottom" />
         </div>
-        <div className="mt-auto">
+        <div className="border-top mt-auto py-3 px-5">
           <Form noValidate onSubmit={formik.handleSubmit}>
             <InputGroup className="has-validation">
               <Form.Control
                 onChange={formik.handleChange}
                 value={formik.values.body}
+                autoComplete="off"
                 name="body"
                 aria-label="body"
                 data-testid="new-message"

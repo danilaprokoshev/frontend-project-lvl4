@@ -64,6 +64,7 @@ const SignupPage = () => {
             <Form.Group>
               <Form.Label htmlFor="username">{t('signup.username_label')}</Form.Label>
               <Form.Control
+                type="username"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.username}
@@ -92,7 +93,7 @@ const SignupPage = () => {
                 value={formik.values.password}
                 placeholder={t('signup.password_placeholder')}
                 name="password"
-                id="password"
+                id="new-password"
                 autoComplete="new-password"
                 isInvalid={signupFailed || (formik.touched.password && formik.errors.password)}
                 required
@@ -115,7 +116,7 @@ const SignupPage = () => {
                 placeholder={t('signup.confirm_password_placeholder')}
                 name="confirmPassword"
                 id="confirmPassword"
-                autoComplete="new-password"
+                autocomplete="new-password"
                 isInvalid={
                   signupFailed
                   || (formik.touched.confirmPassword && formik.errors.confirmPassword)
