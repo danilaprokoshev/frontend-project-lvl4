@@ -40,7 +40,11 @@ const PrivatePage = () => {
     };
 
     fetchContent();
-  }, []);
+
+    return () => {
+      setLoading(false);
+    };
+  });
 
   return (
     <>
