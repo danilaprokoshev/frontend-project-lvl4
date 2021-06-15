@@ -57,12 +57,14 @@ const PrivatePage = () => {
           </div>
         )
         : (
-          <div className="row flex-grow-1 h-75 pb-3">
-            <div className="col-3 border-right">
-              <Channels />
-            </div>
-            <div className="col h-100">
-              <Chat />
+          <div className="container flex-grow-1 my-4 overflow-hidden rounded shadow">
+            <div className="row h-100 bg-white">
+              <div className="col-2 px-0 pt-5 border-end bg-light">
+                <Channels />
+              </div>
+              <div className="col p-0 h-100">
+                <Chat />
+              </div>
             </div>
           </div>
         )}

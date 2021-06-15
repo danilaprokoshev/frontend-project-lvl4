@@ -9,6 +9,10 @@ import { useTranslation } from 'react-i18next';
 import useSocket from '../../hooks/socket.jsx';
 import useAuth from '../../hooks/authorization.jsx';
 
+window.HTMLElement.prototype.scrollTo = (...options) => {
+  window.scrollTo(options);
+};
+
 const Chat = () => {
   const { t } = useTranslation();
   const auth = useAuth();
@@ -31,9 +35,6 @@ const Chat = () => {
   );
 
   useEffect(() => {
-    if (!messagesBox) {
-      return;
-    }
     messagesBox.current?.scrollTo({ behavior: 'smooth', top: bottomRef.current.offsetTop });
   }, [messages, currentChannelId]);
   useEffect(() => {
@@ -66,7 +67,7 @@ const Chat = () => {
   return (
     <>
       <div className="d-flex flex-column h-100">
-        <div ref={messagesBox} id="messages-box" className="chat-messages overflow-auto mb-3">
+        <div ref={messagesBox} id="messages-box" className="chat-messages overflow-auto px-5">
           {messagesChat.length > 0 && messages.map(renderMessage)}
           <div ref={bottomRef} className="messages-bottom" />
         </div>

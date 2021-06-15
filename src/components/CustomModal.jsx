@@ -192,9 +192,7 @@ const CustomModal = ({ onHide }) => {
     });
     if (type === 'removing') {
       return async () => {
-        // setSubmitting(true);
         await socket.removeChannel(channel);
-        // setSubmitting(false);
         onHide();
       };
     }

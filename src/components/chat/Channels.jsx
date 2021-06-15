@@ -61,6 +61,7 @@ const Channels = () => {
             className={buttonClasses}
             onClick={handleSelectChannel(id)}
           >
+            #&nbsp;
             {name}
           </button>
         </li>
@@ -74,6 +75,7 @@ const Channels = () => {
             className={buttonClasses}
             onClick={handleSelectChannel(id)}
           >
+            #&nbsp;
             {name}
           </Button>
           <Dropdown.Toggle className={dropdownButtonClasses} />
@@ -92,7 +94,7 @@ const Channels = () => {
 
   return (
     <>
-      <div className="d-flex mb-2">
+      <div className="d-flex justify-content-between mb-2 px-4">
         <span>{t('channels.channels')}</span>
         <button type="button" className="ml-auto p-0 text-dark btn btn-link" onClick={handleAddChannel}>+</button>
       </div>
