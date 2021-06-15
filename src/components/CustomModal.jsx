@@ -98,7 +98,7 @@ const renderSettingsByType = {
       </>
     );
   },
-  removing: function removing(isOpened, onHideHandler, t, handleRemoveChannel, isSubmitting) {
+  removing: function removing(isOpened, onHideHandler, t, handleRemoveChannel) {
     return (
       <>
         <Modal show={isOpened} onHide={onHideHandler}>
@@ -112,7 +112,7 @@ const renderSettingsByType = {
               <Button className="mr-2 btn btn-secondary" onClick={onHideHandler}>
                 {t('modals.removing.cancel')}
               </Button>
-              <Button variant="danger" disabled={isSubmitting} onClick={handleRemoveChannel}>
+              <Button variant="danger" onClick={handleRemoveChannel}>
                 {t('modals.removing.remove')}
               </Button>
             </div>
@@ -192,9 +192,9 @@ const CustomModal = ({ onHide }) => {
     });
     if (type === 'removing') {
       return async () => {
-        setSubmitting(true);
+        // setSubmitting(true);
         await socket.removeChannel(channel);
-        setSubmitting(false);
+        // setSubmitting(false);
         onHide();
       };
     }

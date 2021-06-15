@@ -116,7 +116,7 @@ const SignupPage = () => {
                 placeholder={t('signup.confirm_password_placeholder')}
                 name="confirmPassword"
                 id="confirmPassword"
-                autocomplete="new-password"
+                autoComplete="new-password"
                 isInvalid={
                   signupFailed
                   || (formik.touched.confirmPassword && formik.errors.confirmPassword)

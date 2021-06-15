@@ -58,7 +58,7 @@ const LoginPage = () => {
                 placeholder={t('login.nick_placeholder')}
                 name="username"
                 id="username"
-                autocomplete="username"
+                autoComplete="username"
                 isInvalid={authFailed}
                 required
                 ref={inputRef}
@@ -73,7 +73,7 @@ const LoginPage = () => {
                 placeholder={t('login.password_placeholder')}
                 name="password"
                 id="current-password"
-                autocomplete="current-password"
+                autoComplete="current-password"
                 isInvalid={authFailed}
                 required
               />
