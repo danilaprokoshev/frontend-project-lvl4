@@ -19,7 +19,7 @@ module.exports = {
   devServer: {
     compress: true,
     port: 8080,
-    host: 'localhost',
+    host: '0.0.0.0',
     publicPath: '/assets/',
     historyApiFallback: true,
     transportMode: 'ws',
