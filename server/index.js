@@ -24,7 +24,7 @@ const appPath = path.join(__dirname, '..');
 const isDevelopment = !isProduction;
 
 const setUpViews = (app) => {
-  const devHost = 'http://0.0.0.0:8080';
+  const devHost = 'http://localhost:8080';
   const domain = isDevelopment ? devHost : '';
   app.register(pointOfView, {
     engine: {
@@ -45,7 +45,6 @@ const setUpStaticAssets = (app) => {
 };
 
 const setUpAuth = (app) => {
-  // TODO add socket auth
   app
     .register(fastifyJWT, {
       secret: 'supersecret',
