@@ -139,7 +139,7 @@ const CustomModal = ({ onHide }) => {
       default:
         break;
     }
-  }, [modal.type]);
+  });
   const { t } = useTranslation();
   const auth = useAuth();
   const socket = useSocket();
