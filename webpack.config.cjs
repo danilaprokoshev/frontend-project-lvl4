@@ -6,7 +6,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const mode = process.env.NODE_ENV || 'development';
 
 module.exports = {
-  entry: './src/indexWP.js',
+  entry: './src/index.js',
   mode,
   resolve: {
     extensions: ['.js', '.jsx'],
