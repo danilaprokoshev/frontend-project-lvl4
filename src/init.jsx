@@ -6,7 +6,7 @@ import React from 'react';
 import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
 import { Provider } from 'react-redux';
 import { I18nextProvider } from 'react-i18next';
-import store from './store.js';
+import getStoreInstance from './store.js';
 import App from './components/App.jsx';
 import AuthProvider from './components/AuthProvider.jsx';
 import SocketProvider from './components/SocketProvider.jsx';
@@ -20,6 +20,7 @@ import {
 import getPostClientPostItemAccessToken from './config/prod.js';
 
 const init = async (socketClient) => {
+  const store = getStoreInstance();
   const rollbarConfig = {
     accessToken: getPostClientPostItemAccessToken(),
     captureUncaught: true,
