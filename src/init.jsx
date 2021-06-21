@@ -17,12 +17,11 @@ import {
   deleteChannel,
   setCurrentChannelId,
 } from './features/channelsInfo/channelsInfoSlice';
-
-const POST_CLIENT_ITEM_ACCESS_TOKEN = '3561b28aed6e4e099120d80a0615a15e';
+import getPostClientPostItemAccessToken from './config/prod.js';
 
 const init = async (socketClient) => {
   const rollbarConfig = {
-    accessToken: POST_CLIENT_ITEM_ACCESS_TOKEN,
+    accessToken: getPostClientPostItemAccessToken(),
     captureUncaught: true,
     captureUnhandledRejections: true,
     payload: {
