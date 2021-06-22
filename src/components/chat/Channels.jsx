@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, ButtonGroup, Dropdown } from 'react-bootstrap';
 import cn from 'classnames';
 import { useTranslation } from 'react-i18next';
-import { setCurrentChannelId } from '../../features/channelsInfo/channelsInfoSlice.js';
-import { openModal, hideModal } from '../../features/modal/modalSlice.js';
+import { setCurrentChannelId } from '../../slices/channelsInfo/channelsInfoSlice.js';
+import { openModal, hideModal } from '../../slices/modal/modalSlice.js';
 import CustomModal from '../CustomModal.jsx';
 
 const Channels = () => {

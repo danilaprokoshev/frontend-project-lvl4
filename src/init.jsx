@@ -11,12 +11,12 @@ import App from './components/App.jsx';
 import AuthProvider from './components/AuthProvider.jsx';
 import SocketProvider from './components/SocketProvider.jsx';
 import getI18nInstance from './lib/i18n.js';
-import { addMessage, deleteMessages } from './features/messagesInfo/messagesInfoSlice';
+import { addMessage, deleteMessages } from './slices/messagesInfo/messagesInfoSlice';
 import {
   addChannel, changeNameChannel,
   deleteChannel,
   setCurrentChannelId,
-} from './features/channelsInfo/channelsInfoSlice';
+} from './slices/channelsInfo/channelsInfoSlice';
 import getPostClientPostItemAccessToken from './config/prod.js';
 
 const init = async (socketClient) => {
