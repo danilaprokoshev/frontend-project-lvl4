@@ -5,7 +5,7 @@
 
 ## About
 
-[**Slack-chat analogue**](https://frontend-l4-danila-p-2nd.herokuapp.com) is my educational project that I performed during the studying on [hexlet.io](https://ru.hexlet.io/professions) (project level 4).
+[**Slack-chat analogue**](https://frontend-l4-danila-p.herokuapp.com) is my educational project that I performed during the studying on [hexlet.io](https://ru.hexlet.io/professions) (project level 4).
 
 This chat is extremely simple version of Slack-chat.
 
