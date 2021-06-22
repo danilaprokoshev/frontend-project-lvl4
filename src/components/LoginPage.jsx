@@ -34,6 +34,7 @@ const LoginPage = () => {
         history.replace('/');
       } catch (err) {
         if (err.isAxiosError && err.response.status === 401) {
+          setSubmitting(false);
           setAuthFailed(true);
           inputRef.current.select();
           return;

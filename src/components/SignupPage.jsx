@@ -47,6 +47,7 @@ const SignupPage = () => {
         history.replace('/');
       } catch (err) {
         if (err.isAxiosError && err.response.status === 409) {
+          setSubmitting(false);
           setSignupFailed(true);
           inputRef.current.select();
           return;
