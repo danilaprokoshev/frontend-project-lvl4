@@ -7,13 +7,15 @@ import cn from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { setCurrentChannelId } from '../../slices/channelsInfo/channelsInfoSlice.js';
 import { openModal, hideModal } from '../../slices/modal/modalSlice.js';
-import CustomModal from '../CustomModal.jsx';
+// import CustomModal from '../CustomModal.jsx';
+import getModal from '../modals/index.js';
 
 const Channels = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const channels = useSelector((state) => state.channelsInfo.channels);
   const currentChannelId = useSelector((state) => state.channelsInfo.currentChannelId);
+  const modal = useSelector((state) => state.modal);
 
   const handleSelectChannel = (id) => (e) => {
     e.target.blur();
@@ -92,6 +94,15 @@ const Channels = () => {
     dispatch(hideModal());
   };
 
+  const renderModal = ({ isOpened, type }) => {
+    if (!isOpened) {
+      return null;
+    }
+
+    const Modal = getModal(type);
+    return <Modal onHide={handleHideModal} />;
+  };
+
   return (
     <>
       <div className="d-flex justify-content-between mb-2 px-4">
@@ -101,7 +112,8 @@ const Channels = () => {
       <ul className="nav flex-column nav-pills nav-fill">
         {channels.length > 0 && channels.map(renderChannelTitle)}
       </ul>
-      <CustomModal onHide={handleHideModal} />
+      {renderModal(modal)}
+      {/* <CustomModal onHide={handleHideModal} /> */}
     </>
   );
 };
