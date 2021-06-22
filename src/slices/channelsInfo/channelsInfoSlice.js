@@ -23,7 +23,7 @@ export const channelsInfoSlice = createSlice({
       const currentChannelId = (state.currentChannelId === action.payload)
         ? DEFAULT_CHANNEL_ID
         : state.currentChannelId;
-      state.channels.filter((ch) => ch.id !== action.payload);
+      _.remove(state.channels, (ch) => ch.id === action.payload);
       _.set(state, 'currentChannelId', currentChannelId);
     },
     changeNameChannel: (state, action) => {
