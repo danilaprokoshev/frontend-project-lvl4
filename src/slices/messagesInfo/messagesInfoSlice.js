@@ -7,9 +7,9 @@ export const messagesInfoSlice = createSlice({
     messages: [],
   },
   reducers: {
-    addMessages: (state, action) => ({
-      messages: action.payload,
-    }),
+    addMessages: (state, action) => {
+      state.messages.splice(0, Infinity, ...action.payload);
+    },
     addMessage: (state, action) => {
       state.messages.push(action.payload);
     },

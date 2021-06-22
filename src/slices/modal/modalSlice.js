@@ -16,6 +16,7 @@ export const modalSlice = createSlice({
     hideModal: () => ({
       isOpened: false,
       type: null,
+      extra: null,
     }),
   },
 });
