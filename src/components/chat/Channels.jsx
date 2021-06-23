@@ -7,7 +7,6 @@ import cn from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { setCurrentChannelId } from '../../slices/channelsInfo/channelsInfoSlice.js';
 import { openModal, hideModal } from '../../slices/modal/modalSlice.js';
-// import CustomModal from '../CustomModal.jsx';
 import getModal from '../modals/index.js';
 
 const Channels = () => {

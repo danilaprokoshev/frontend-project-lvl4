@@ -11,7 +11,7 @@ import App from './components/App.jsx';
 import AuthProvider from './components/AuthProvider.jsx';
 import SocketProvider from './components/SocketProvider.jsx';
 import getI18nInstance from './lib/i18n.js';
-import { addMessage, deleteMessages } from './slices/messagesInfo/messagesInfoSlice';
+import { addMessage } from './slices/messagesInfo/messagesInfoSlice';
 import {
   addChannel, changeNameChannel,
   deleteChannel,
@@ -40,7 +40,6 @@ const init = async (socketClient) => {
   });
   socket.on('removeChannel', ({ id }) => {
     store.dispatch(deleteChannel(id));
-    store.dispatch(deleteMessages(id));
   });
   socket.on('renameChannel', (channel) => {
     store.dispatch(changeNameChannel(channel));
